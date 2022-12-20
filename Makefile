@@ -5,8 +5,12 @@ STICK=/media/ujr/MEMSTICKUJR
 default:
 	git status
 
-publish:
-	@echo "Publish on GitHub Pages ..."
+pull:
+	@echo "Pulling changes from origin"
+	git pull origin
+
+push publish:
+	@echo "Publishing on GitHub Pages"
 	git push origin
 
 #publish:

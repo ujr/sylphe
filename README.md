@@ -5,12 +5,14 @@ Online at www.sylphe.ch since June 2018. Domain registered for ages.
 Generally some lightweight stuff about my personal interests and musings.
 
 - *art/* – raw or editable artwork for the site
-- *site/* – the stuff to be copied to the web server
+- *docs/* – the stuff to be published by the web server
 - *trials/* – experiments and trials, not part of the site
 - *README.md* – this file
 
-Only the stuff in site/ is public; all other files and
-the wiki in the Fossil repository are private.
+Only the stuff in *docs/* is part of the published web site
+(I'd prefer the name *site/* but *docs/* is the GitHub Pages
+convention, where the site presently is published). The empty
+file *docs/.nojekyll* disables Jekyll processing.
 
 
 ## Icons and Tiles
