@@ -1,0 +1,1332 @@
+% Jules Verne, 1879: Les Révoltés de la Bounty
+
+\magnification=\magstep2
+
+\input fonts
+\input epsf
+
+\ifx\pdfoutput\undefined\csname newcount\endcsname\pdfoutput\fi
+\ifcase\pdfoutput\def\pdfinfo#1{\special{pdf:docinfo<<#1>>}}\fi
+
+\pdfinfo{ /Author (Jules Verne 1879)
+ /Title (Les R^^e9volt^^e9s de la Bounty) 
+ /Subject (Typeset from public sources by U.J.R.) }
+
+\hsize=15truecm \advance\hoffset 5truemm
+\vsize=23truecm
+
+\parskip=0pt plus 1pt
+\parindent=1pc
+
+% Very flexible interword glue and not very fuzzy about right margin:
+\spaceskip=.3333em plus .22em minus .18em
+\hfuzz=1pt
+
+\font\tf=cmbx17
+\font\sf=cmbx12
+\font\sc=cmr9 % small caps, relativ zu cmr10
+
+\def\fig#1{\hbox to 10cm{\special{pdf:image width 10cm (#1)}\hss}}%
+\def\fn#1#2{\footnote{\hbox{\eightpoint#1}}{\eightpoint#2}}%
+\let\,\thinspace
+
+% Could use HyperTex \specials {html:<a href="...">} and {html:</a>}
+% but dvipdfm then generates ugly blue boxes around the link text;
+% should check pdfTeX capabilities... (but pdfTeX gives larger PDF files).
+\def\href#1#2{{#2}}%
+
+\def\sylphech{\leavevmode\href{http://www.sylphe.ch}{www.sylphe.ch}}%
+\def\CCBYSA{\leavevmode\href
+  {https://creativecommons.org/licenses/by-sa/4.0/}{\sc CC BY\kern-.3ex -SA}}%
+\def\copytext{2020 $\cdot$ \sylphech\ $\cdot$ \CCBYSA}%
+
+\catcode`|=\active\def|{\kern.4ex}% 
+
+% Definitions to help with French punctuation spacing:
+% guillemets, space before : ! ? and inside << and >>
+
+\font\sy=cmcyr9 % has guillemets << and >> at code 29 and 30
+\def\ql{\leavevmode\raise.1ex\hbox{\sy\char 29}\kern.4ex}%
+\def\qr{\kern.4ex\raise.1ex\hbox{\sy\char 30}}%
+\def\colon{\kern.4ex:}\def\exclam{\kern.4ex!}\def\questm{\kern.4ex?}%
+
+\begingroup\catcode`<=\active\catcode`>=\active
+  \catcode`:=\active\catcode`?=\active\catcode`!=\active
+\gdef\french{% make active and assign kerning/punctuation
+  \catcode`<=\active \let<=\ql
+  \catcode`>=\active \let>=\qr
+  \catcode`:=\active \let:=\colon
+  \catcode`!=\active \let!=\exclam
+  \catcode`?=\active \let?=\questm
+}\gdef\endfrench{% make them ordinary "other" chars again
+  \catcode`<=12\catcode`>=12\catcode`:=12\catcode`!=12\catcode`?=12
+}\endgroup
+
+% Titelei:
+% 1 Schmutztitel
+% 2 vakat
+% 3 Titelseite
+% 4 Impressum
+
+\begingroup
+\nopagenumbers
+
+
+\topglue5pc
+\centerline{\tf Les R\'evolt\'es de la Bounty}
+\bigskip
+\centerline{Jules Verne, 1879}
+\vfill\eject
+
+
+\topglue5pc
+% vakat
+\vfill\eject
+
+
+\topglue5pc
+\centerline{\tf Les R\'evolt\'es de la Bounty}
+\bigskip
+\centerline{par {\bf Jules Verne},}
+\smallskip
+\centerline{avec cinq illustrations de S. Dr\'ee,}
+\smallskip
+\centerline{publi\'e par Jules Hetzel \`a Paris en {\bf 1879}.}
+\vfill
+\begingroup\french\narrower\noindent\it
+Nous croyons bon de pr\'evenir nos lecteurs que ce r\'ecit
+n'est point une fiction. Tous les d\'etails en sont pris aux
+annales maritimes de la Grande-Bretagne. La r\'ealit\'e fournit
+quelquefois des faits si romanesques que l'imagination elle-m\^eme
+ne pourrait rien y ajouter.
+\par\endgroup
+\vfill\eject
+
+
+\topglue5pc
+\vfill
+\begingroup\ninepoint
+\noindent
+Der vorliegende Text ist eigentlich von Gabriel Marcel (1843--1909),
+einem Geo\-graphen der Biblioth\`eque National, welcher mit
+Jules Verne (1828--1905) und seinem Verleger Pierre-Jules
+Hetzel (1814--1886) zu\-sam\-men\-ar\-bei\-te\-te.
+Verne hat den Text gegengelesen und f\"ur 300 Francs alle
+Rechte an der Kurzgeschichte erworben. Er erschien 1879
+als Anhang zum Roman {\it Les Cinq Cents Millions de la B\'egum}
+in der Reihe {\it Voyages Extraordinaires}, welche aus insgesamt
+68 Romanen und Kurzgeschichten von Verne besteht und
+zwischen 1863 und 1919 (ab 1905 posthum) erschien.
+\smallskip\noindent
+Die Kurzgeschichte im Umfang von etwa 8000 W\"ortern
+ist in drei Kapitel gegliedert: {\it die Aussetzung}, {\it die
+Ausgesetzten\/} und {\it die Aufst\"andigen}. Dabei nimmt
+die Leistung des ausgesetzten Kapit\"ans William Bligh und
+der ihm Loyalen einen
+besonderen Stel\-len\-wert ein, dies im Gegensatz zu anderen
+Erz\"ahlungen der Meuterei auf der {\sl Bounty}. 
+\smallskip\noindent
+\settabs\+\hskip5.5em&\cr
+\+Textquelle:&Wikisource, die freie Quellensammlung\cr
+\+Bildquelle:&jv.gilead.org.il/rpaul/\cr
+\+Textsatz, Karte, Anhang: {\sc UJR}, im Fr\"uhjahr 2020\cr
+\bigskip
+\endgroup
+\centerline{\eightpoint \copytext}
+\eject
+
+\endgroup
+\french
+
+
+\topglue 5pc
+\centerline{\sf I}
+\bigskip
+\centerline{\sf L'ABANDON}
+\vskip 2pc
+\noindent
+Pas le moindre souffle, pas une ride \`a la surface de
+la mer, pas un nuage au ciel. Les splendides constellations
+de l'h\'emisph\`ere austral se dessinent avec une
+incomparable puret\'e.
+Les voiles de la {\sl Bounty\/} pendent le long des m\^ats,
+le b\^atiment est immobile, et la lumi\`ere de la lune,
+p\^alissant devant l'aurore qui se l\`eve,
+\'eclaire l'espace d'une lueur ind\'efinissable. 
+
+La {\sl Bounty}, navire de deux cent quinze tonneaux
+mont\'e par quarante-six hommes, avait quitt\'e Spithead,
+le 23~d\'ecembre 1787, sous le commandement du capitaine Bligh,
+marin exp\'eriment\'e mais un peu rude, qui avait accompagn\'e
+le capitaine Cook dans son dernier voyage d'exploration.
+
+La {\sl Bounty\/} avait pour mission sp\'eciale de transporter
+aux Antilles l'arbre \`a pain, qui pousse \`a profusion dans
+l'archipel de Tahiti. Apr\`es une rel\^ache de six mois dans
+la baie de Matava\"\i, William Bligh, ayant charg\'e un millier
+de ces arbres, avait pris la route des Indes occidentales,
+apr\`es un assez court s\'ejour aux {\^\i}les des Amis.
+
+Maintes fois, le caract\`ere soup\c{c}onneux et emport\'e
+du capitaine avait amen\'e des sc\`enes d\'esagr\'eables
+entre quelques-uns de ses officiers et lui. Cependant,
+la tranquillit\'e qui r\'egnait \`a bord de la {\sl Bounty\/},
+au lever du soleil, le 28~avril 1789, ne faisait rien
+pr\'esager des graves \'ev\'enements qui allaient se produire.
+
+Tout semblait calme, en effet, lorsque tout \`a coup
+une animation insolite se propage sur le b\^atiment.
+Quelques matelots s'accostent, \'echangent deux ou trois
+paroles \`a voix basse, puis disparaissent \`a petits pas.
+
+Est-ce le quart du matin qu'on rel\`eve?
+Quelque accident inopin\'e s'est-il produit \`a bord?
+
+<Pas de bruit surtout, mes amis, dit Fletcher Christian,
+le second de la {\sl Bounty}. Bob, armez votre pistolet,
+mais ne tirez pas sans mon ordre. Vous, Churchill, prenez
+votre hache et faites sauter la serrure de la cabine du capitaine.
+Une derni\`ere recommandation: Il me le faut vivant!>
+
+Suivi d'une dizaine de matelots arm\'es de sabres,
+de coutelas et de pistolets, Christian se glissa dans
+l'entrepont; puis, apr\`es avoir plac\'e deux
+sentinelles devant la cabine de Stewart et de Peter Heywood,
+le ma{\^\i}tre d'\'equipage et le midshipman de la
+{\sl Bounty}, il s'arr\^eta devant la porte du capitaine.
+
+<Allons, gar\c{c}ons, dit-il, un bon coup d'\'epaule!>
+
+La porte c\'eda sous une pression vigoureuse,
+et les matelots se pr\'ecipit\`erent dans la cabine.
+
+Surpris d'abord par l'obscurit\'e,
+et r\'efl\'echissant peut-\^etre
+\`a la gravit\'e de leurs actes,
+ils eurent un moment d'h\'esitation.
+
+<Hol\`a! qu'y a-t-il?
+Qui donc ose se permettre? ...> s'\'ecria
+le capitaine en sautant \`a bas de son cadre.
+
+--- Silence, Bligh! r\'epondit Churchill. Silence,
+et n'essaie pas de r\'esister, ou je te b\^aillonne!
+
+--- Inutile de t'habiller, ajouta Bob. Tu feras toujours
+assez bonne figure, lorsque tu seras pendu \`a la
+vergue d'artimon!
+
+--- Attachez-lui les mains derri\`ere le dos, Churchill,
+dit Christian, et hissez-le sur le pont!
+
+--- Le plus terrible des capitaines n'est pas bien redoutable,
+quand on sait s'y prendre>, fit observer John Smith,
+le philosophe de la bande.
+
+Puis le cort\`ege, sans s'inqui\'eter de
+r\'eveiller ou non les matelots du dernier quart,
+encore endormis, remonta l'escalier et reparut sur le pont.
+
+C'\'etait une r\'evolte en r\`egle.
+Seul de tous les officiers du bord, Young, un des
+midshipmen, avait fait cause commune avec les r\'e\-vol\-t\'es.
+
+Quant aux hommes de l'\'equipage, les h\'esitants
+avaient d\^u c\'eder pour l'instant, tandis que
+les autres, sans armes, sans chef, restaient spectateurs
+du drame qui allait s'accomplir sous leurs yeux.
+
+Tous \'etaient sur le pont, rang\'es
+en silence; ils observaient la contenance de leur capitaine,
+qui, demi nu, s'avan\c{c}ait la t\^ete haute au milieu
+de ces hommes habitu\'es \`a trembler devant lui. 
+
+<Bligh, dit Christian, d'une voix rude, vous \^etes
+d\'emont\'e de votre commandement.
+
+--- Je ne vous reconnais pas le droit... r\'epondit le capitaine.
+
+--- Ne perdons pas de temps en protestations inutiles,
+s'\'ecria Christian, qui interrompit Bligh. Je suis,
+en ce moment, l'interpr\`ete de tout l'\'equipage
+de la {\sl Bounty}.
+Nous n'avions pas encore quitt\'e l'Angleterre que nous
+avions d\'ej\`a \`a nous plaindre de vos soup\c{c}ons
+injurieux, de vos proc\'ed\'es brutaux. Lorsque je dis
+nous, j'entends les officiers aussi bien que les matelots.
+Non seulement nous n'avons jamais pu obtenir la satisfaction
+qui nous \'etait due, mais vous avez toujours rejet\'e
+nos plaintes avec m\'epris! Sommes-nous donc des chiens,
+pour \^etre injuri\'es \`a tout moment?
+Canailles, brigands, menteurs, voleurs! vous n'aviez
+pas d'expression assez forte, d'injure assez grossi\`ere
+pour nous! En v\'erit\'e, il faudrait ne pas \^etre un
+homme pour supporter pareille existence!
+Et moi, moi votre compatriote, moi qui connais votre
+famille, moi qui ai d\'ej\`a fait deux voyages sous
+vos ordres, m'avez-vous \'epargn\'e?
+Ne m'avez-vous pas accus\'e, hier encore, de vous avoir
+vol\'e quelques mis\'erables fruits? Et les hommes!
+Pour un rien, aux fers!
+Pour une bagatelle, vingt-quatre coups de corde!
+Eh bien! tout se paie en ce monde!
+Vous avez \'et\'e trop lib\'eral avec nous, Bligh!
+A notre tour! Vos injures, vos injustices,
+vos accusations insens\'ees, les tortures morales
+et physiques dont vous avez accabl\'e votre \'equipage
+depuis un an et demi, vous allez les expier,
+et les expier durement!
+Capitaine, vous avez \'et\'e jug\'e par ceux que vous avez
+offens\'es, et vous \^etes condamn\'e.
+Est-ce bien cela, camarades?
+
+--- Oui, oui, \`a mort! s'\'ecri\`erent
+la plupart des matelots, en mena\c{c}ant leur capitaine.
+
+--- Capitaine Bligh, reprit Christian, quelques-uns
+avaient parl\'e de vous hisser au bout d'une corde
+entre le ciel et l'eau. D'autres proposaient de vous
+d\'echirer les \'epaules avec le chat \`a neuf queues,
+jusqu'\`a ce que mort s'ensuiv{\^\i}t. Ils manquaient
+d'imagination. J'ai trouv\'e mieux que cela. D'ailleurs,
+vous n'\^etes pas seul coupable ici. Ceux qui ont toujours
+fid\`element ex\'ecut\'e vos ordres, si cruels qu'ils
+fussent, seraient au d\'esespoir de passer sous mon
+commandement. Ils ont m\'erit\'e de vous accompagner
+l\`a o\`u le vent vous poussera.
+
+--- Qu'on am\`ene la chaloupe!>
+
+Un murmure d\'esapprobateur accueillit ces derni\`eres
+paroles de Christian, qui ne parut pas s'en inqui\'eter.
+Le capitaine Bligh, que ces menaces ne parvenaient pas
+\`a troubler, profita d'un instant de silence pour prendre
+la parole.
+
+\pageinsert
+\vskip 15cm
+\centerline{\fig{img/bounty1.jpg}}
+\smallskip
+\centerline{\it <Offciers et matelots, dit-il d'une voix ferme...>}
+\vfill
+\endinsert
+
+<Officiers et matelots, dit-il d'une voix ferme, en ma
+qualit\'e d'officier de la marine royale, commandant
+la {\sl Bounty}, je proteste contre le traitement que
+vous voulez me faire subir. Si vous avez \`a vous plaindre
+de la fa\c{c}on dont j'ai exerc\'e mon commandement,
+vous pouvez me faire juger par une cour martiale.
+Mais vous n'avez pas r\'efl\'echi, sans doute, \`a la
+gravit\'e de l'acte que vous allez commettre. Porter
+la main sur votre capitaine, c'est vous mettre
+en r\'evolte contre les lois existantes, c'est rendre
+pour vous tout retour impossible dans votre patrie,
+c'est vouloir \^etre trait\'es comme des forbans!
+T\^ot ou tard, c'est la mort ignominieuse, la mort
+des tra{\^\i}tres et des rebelles! Au nom de l'honneur
+et de l'ob\'eissance que vous m'avez jur\'es, je vous
+somme de rentrer dans le devoir!
+
+--- Nous savons parfaitement \`a quoi nous nous exposons,
+r\'e\-pon\-dit Churchill.
+
+--- Assez! Assez! cria l'\'equipage,
+pr\^et \`a se porter \`a des voies de fait.
+
+--- Eh bien! dit Bligh, s'il vous faut une victime, que ce
+soit moi, mais moi seul! Ceux de mes compagnons que vous
+condamnez comme moi, n'ont fait qu'ex\'ecuter mes ordres!>
+
+La voix du capitaine fut alors couverte par un concert
+de vocif\'erations, et il dut renoncer \`a toucher ces
+c{\oe}urs devenus impitoyables.
+
+Pendant ce temps, les dispositions avaient \'et\'e prises
+pour que les ordres de Christian fussent ex\'ecut\'es.
+
+Cependant, un assez vif d\'ebat s'\'etait \'elev\'e entre
+le second et plusieurs des r\'evolt\'es qui voulaient
+abandonner sur les flots le capitaine Bligh et ses compagnons
+sans leur donner une arme, sans leur laisser une once de pain.
+
+Quelques-uns -- et c'\'etait l'avis de Churchill -- trouvaient
+que le nombre de ceux qui devaient quitter le navire n'\'etait
+pas assez consid\'erable. Il fallait se d\'efaire, disait-il,
+de tous les hommes qui, n'ayant pas tremp\'e directement dans
+le complot, n'\'etaient pas s\^urs.
+On ne pouvait compter sur ceux qui se contentaient d'accepter
+les faits accomplis. Quant \`a lui, son dos lui faisait encore
+mal des coups de fouet qu'il avait re\c{c}us pour avoir
+d\'esert\'e \`a Tahiti. Le meilleur, le plus rapide moyen
+de le gu\'erir, ce serait de lui livrer d'abord le commandant!...
+Il saurait bien se venger, et de sa propre main!
+
+<Hayward! Hallett! cria Christian, en s'adressant \`a deux
+des officiers, sans tenir compte des observations de Churchill,
+descendez dans la chaloupe.
+
+--- Que vous ai-je fait, Christian, pour que vous me traitiez
+ainsi? dit Hayward. C'est \`a la mort que vous m'envoyez!
+
+--- Les r\'ecriminations sont inutiles!
+Ob\'eissez, ou sinon!... Fryer, embarquez aussi!>
+
+Mais ces officiers, au lieu de se diriger vers la chaloupe,
+se rapproch\`erent du capitaine Bligh, et Fryer, qui semblait
+le plus d\'etermin\'e, se pencha vers lui en disant:
+
+<Commandant, voulez-vous essayer de reprendre le b\^atiment?
+Nous n'avons pas d'armes, il est vrai; mais ces mutins,
+surpris, ne pourront r\'esister. Si quelques-uns d'entre nous
+sont tu\'es, qu'importe! On peut tenter la partie!
+Que vous en semble?>
+
+D\'ej\`a les officiers prenaient leurs dispositions
+pour se jeter sur les r\'evolt\'es, occup\'es
+\`a d\'epasser la chaloupe de ses porte-manteaux,
+lorsque Churchill, \`a qui cet entretien, si rapide
+qu'il f\^ut, n'avait pas \'echapp\'e,
+les entoura avec quelques hommes bien arm\'es,
+et les fit embarquer de force.
+
+<Millward, Muspratt, Birket, et vous autres, dit Christian
+en s'adressant \`a quelques-uns des matelots qui n'avaient
+point pris part \`a la r\'evolte, descendez dans l'entrepont,
+et choisissez ce que vous avez de plus pr\'ecieux!
+Vous accompagnez le capitaine Bligh. Toi, Morrison,
+surveille-moi ces gaillards-l\`a! Purcell, prenez votre
+coffre de charpentier, je vous permets de l'emporter.>
+
+Deux m\^ats avec leurs voiles, quelques clous, une scie,
+une demi-pi\`ece de toile \`a voile, quatre petites pi\`eces
+contenant cent vingt-cinq litres d'eau, cent cinquante livres
+de biscuit, trente-deux livres de porc sal\'e, six bouteilles
+de vin, six bouteilles de rhum, la cave \`a liqueur du capitaine,
+voil\`a tout ce que les abandonn\'es eurent permission d'emporter.
+
+On leur jeta, en outre, deux ou trois vieux sabres,
+mais on leur refusa toute esp\`ece d'armes \`a feu.
+
+<O\`u sont donc Heywood et Steward? dit Bligh, quand
+il fut dans la chaloupe. Eux aussi m'ont-ils trahi?>
+
+Ils ne l'avaient pas trahi, mais Christian avait r\'esolu
+de les garder \`a bord.
+
+Le capitaine eut alors un moment de d\'ecouragement
+et de faiblesse bien pardonnable, qui ne dura pas.
+
+<Christian, dit-il, je vous donne ma parole d'honneur
+d'oublier tout ce qui vient de se passer, si vous renoncez
+\`a votre abominable projet! Je vous en supplie, pensez
+\`a ma femme et \`a ma famille!
+Moi mort, que deviendront tous les miens!
+
+--- Si vous aviez eu quelque honneur, r\'epondit Christian,
+les choses n'en seraient point arriv\'ees \`a ce point.
+Si vous-m\^eme aviez pens\'e un peu plus souvent \`a votre femme,
+\`a votre famille, aux femmes et aux familles des autres, vous
+n'auriez pas \'et\'e si dur, si injuste envers nous tous!>
+
+A son tour, le bosseman, au moment d'embarquer,
+essaya d'at\-ten\-drir Christian.
+Ce fut en vain.
+
+<Il y a longtemps que je souffre, r\'epondit ce dernier
+avec amertume. Vous ne savez pas quelles ont \'et\'e mes
+tortures! Non! cela ne pouvait durer un jour de plus, et,
+d'ailleurs, vous n'ignorez pas que, durant tout le voyage,
+moi, le second de ce navire, j'ai \'et\'e trait\'e comme
+un chien! Cependant, en me s\'eparant du capitaine Bligh,
+que je ne reverrai probablement jamais, je veux bien, par
+piti\'e, ne pas lui enlever tout espoir de salut.
+--|Smith! descendez dans la cabine du capitaine, et reportez-lui
+ses v\^etements, sa commission, son journal et son portefeuille.
+De plus, qu'on lui remette mes tables nautiques et mon propre
+sextant. Il aura ainsi quelque chance de pouvoir sauver ses
+compagnons et se tirer d'affaire lui-m\^eme!>
+
+Les ordres de Christian furent ex\'ecut\'es,
+non sans quelque protestation.
+
+<Et maintenant, Morrison, largue l'amarre, cria
+le second devenu le premier, et \`a la gr\^ace de Dieu!>
+
+\pageinsert
+\vskip 15cm
+\centerline{\fig{img/bounty2.jpg}}
+\smallskip
+\centerline{\it <Tandis que les r\'evolt\'es
+  saluaient d'acclamations ironiques...>}
+\vfill
+\endinsert
+
+Tandis que les r\'evolt\'es saluaient d'acclamations
+ironiques le capitaine Bligh et ses malheureux compagnons,
+Christian, appuy\'e contre le bastingage, ne pouvait
+d\'etacher les yeux de la chaloupe qui s'\'eloignait.
+Ce brave officier, dont la conduite, jusqu'alors loyale
+et franche, avait m\'erit\'e les \'eloges de tous les
+commandants sous lesquels il avait servi, n'\'etait
+plus aujourd'hui que le chef d'une bande de forbans.
+Il ne lui serait plus permis de revoir ni sa vieille
+m\`ere, ni sa fianc\'ee, ni les rivages de l'{\^\i}le
+de Man, sa patrie. Il se sentait d\'echu dans sa propre
+estime, d\'eshonor\'e aux yeux de tous!
+Le ch\^atiment suivait d\'ej\`a la faute!
+
+\vfill\eject
+
+
+\topglue 5pc
+\centerline{\sf II}
+\bigskip
+\centerline{\sf LES ABANDONN\'ES}
+\vskip 2pc
+\noindent
+Avec ses dix-huit passagers, officiers et matelots,
+et le peu de provisions qu'elle contenait, la chaloupe
+qui portait Bligh \'etait tellement charg\'ee, qu'elle
+d\'epassait \`a peine de quinze pouces le niveau de
+la mer. Longue de vingt et un pieds, large de six, elle
+pouvait \^etre parfaitement appropri\'ee au service de
+la {\sl Bounty\/}; mais, pour contenir un \'equipage
+aussi nombreux, pour faire un voyage un peu long, il
+\'etait difficile de trouver embarcation plus d\'etestable.
+
+Les matelots, confiants dans l'\'energie et l'habilet\'e
+du capitaine Bligh et des officiers confondus dans le
+m\^eme sort, nageaient vi\-gou\-reu\-se\-ment, et la chaloupe
+fendait rapidement les lames.
+
+Bligh n'avait pas h\'esit\'e sur le parti \`a prendre.
+Il fallait, tout d'abord, regagner au plus t\^ot l'{\^\i}le
+Tofoa, la plus voisine du groupe des {\^\i}les des Amis,
+qu'ils avaient quitt\'ee quelques jours avant, il fallait
+y recueillir des fruits de l'arbre \`a pain, renouveler
+l'approvisionnement d'eau, et, de l\`a, courir sur Tonga-Tabou.
+On pourrait sans doute y prendre des vivres en assez
+grande quantit\'e pour faire la travers\'ee jusqu'aux
+\'etablissements hollandais de Timor, si, par crainte
+des indig\`enes, l'on ne voulait pas s'arr\^eter dans
+les innombrables archipels sem\'es sur la route.
+
+La premi\`ere journ\'ee se passa sans incident,
+et la nuit tombait, lorsqu'on d\'ecouvrit les
+c\^otes de Tofoa. Par malheur, le rivage \'etait
+si rocheux, la plage si accore, qu'on ne pouvait y
+d\'ebarquer de nuit. Il fallut donc attendre le jour.
+
+Bligh, \`a moins de n\'ecessit\'e absolue,
+entendait ne pas toucher aux provisions de la chaloupe.
+Il fallait donc que l'{\^\i}le nourr{\^\i}t ses hommes
+et lui. Cela semblait devoir \^etre difficile, car,
+tout d'abord, lorsqu'ils furent \`a terre, ils ne
+rencontr\`erent pas trace d'habitants.
+Quelques-uns, cependant, ne tard\`erent pas \`a
+se montrer, et, ayant \'et\'e bien re\c{c}us,
+ils en amen\`erent d'autres, qui apport\`erent
+un peu d'eau et quelques noix de coco.
+
+L'embarras de Bligh \'etait grand.
+Que dire \`a ces naturels qui avaient d\'ej\`a
+trafiqu\'e avec la {\sl Bounty\/} pendant sa derni\`ere
+rel\^ache? A tout prix, il importait de leur cacher
+la v\'erit\'e, afin de ne pas d\'etruire
+le prestige dont les \'etrangers avaient \'et\'e
+entour\'es jusqu'alors dans ces {\^\i}les.
+
+Dire qu'ils \'etaient envoy\'es aux provisions
+par le b\^atiment rest\'e au large?
+Impossible, puisque la {\sl Bounty\/} n'\'etait pas
+visible, m\^eme du haut des collines! Dire que le navire
+avait fait naufrage, et que les indig\`enes voyaient
+en eux les seuls survivants des naufrag\'es? c'\'etait
+encore la fable la plus vraisemblable. Peut-\^etre les
+toucherait-elle, les am\`enerait-elle \`a
+compl\'eter les provisions de la chaloupe.
+Bligh s'arr\^eta donc \`a ce dernier parti,
+si dangereux qu'il f\^ut, et il pr\'evint ses hommes,
+afin que tout le monde f\^ut d'accord sur cette fable.
+
+En entendant ce r\'ecit, les naturels ne firent
+para{\^\i}tre ni marque de joie ni signes de chagrin.
+Leur visage n'exprima qu'un profond \'etonnement,
+et il fut impossible de conna{\^\i}tre ce qu'ils pensaient.
+
+Le 2 mai, le nombre des indig\`enes venus des autres
+parties de l'{\^\i}le s'accrut d'une fa\c{c}on
+inqui\'etante, et Bligh put bient\^ot juger qu'ils
+avaient des intentions hostiles. Quelques-uns
+essay\`erent m\^eme de haler l'embarcation sur
+le rivage, et ne se retir\`erent que devant les
+d\'emonstrations \'energiques du capitaine, qui dut
+les menacer de son coutelas. Pendant ce temps,
+quelques-uns de ses hommes, que Bligh avait envoy\'es
+\`a la recherche, rapportaient trois gallons d'eau.
+
+Le moment \'etait venu de quitter cette {\^\i}le
+inhospitali\`ere. Au coucher du soleil, tout \'etait
+pr\^et, mais il n'\'etait pas facile de gagner
+la chaloupe. Le rivage \'etait bord\'e d'une
+foule d'indig\`enes qui choquaient des pierres l'une
+contre l'autre, pr\^ets \`a les lancer.
+Il fallait donc que la chaloupe se t{\^\i}nt \`a quelques
+toises du rivage et n'accost\^at qu'au moment m\^eme o\`u
+les hommes seraient tout \`a fait pr\^ets \`a embarquer.
+
+Les Anglais, v\'eritablement tr\`es inquiets
+des dispositions hostiles des naturels, redescendirent
+la gr\`eve, au milieu de deux cents indig\`enes,
+qui n'attendaient qu'un signal pour se jeter sur eux.
+Cependant, tous venaient d'entrer heureusement dans
+l'embarcation, lorsque l'un des matelots, nomm\'e
+Bancroft, eut la funeste id\'ee de revenir sur
+la plage pour chercher quelque objet qu'il y avait
+oubli\'e. En une seconde, cet imprudent fut
+entour\'e par les naturels et assomm\'e
+\`a coups de pierre, sans que ses compagnons,
+qui ne poss\'edaient pas une arme \`a feu,
+pussent le secourir. D'ailleurs, eux-m\^emes,
+\`a cet instant, \'etaient attaqu\'es,
+des pierres pleuvaient sur eux.
+
+<Allons, gar\c{c}ons, cria Bligh,
+vite aux avirons, et souquez ferme!>
+
+Les naturels entr\`erent alors dans la mer et firent
+pleuvoir sur l'embarcation une nouvelle gr\^ele de
+cailloux. Plusieurs hommes furent bless\'es. Mais Hayward,
+ramassant une des pierres qui \'etaient tomb\'ees dans
+la chaloupe, visa l'un des assaillants et l'atteignit
+entre les deux yeux. L'indig\`ene tomba \`a la renverse
+en poussant un grand cri auquel r\'epondirent les hourras
+des Anglais. Leur infortun\'e camarade \'etait veng\'e.
+
+Cependant, plusieurs pirogues se d\'etachaient du
+rivage et leur donnaient la chasse. Cette poursuite
+ne pouvait se terminer que par un combat, dont l'issue
+n'aurait pas \'et\'e heureuse, lorsque le ma{\^\i}tre
+d'\'equipage eut une lumineuse id\'ee.
+Sans se douter qu'il imitait Hippom\`ene dans sa lutte
+avec Atalante, il se d\'epouilla de sa vareuse et la jeta
+\`a la mer. Les naturels, l\^achant la proie pour l'ombre,
+s'attard\`erent afin de la ramasser, et cet exp\'edient
+permit \`a la chaloupe de doubler la pointe de la baie.
+
+Sur ces entrefaites, la nuit \'etait enti\`erement
+venue, et les indig\`enes, d\'ecourag\'es,
+abandonn\`erent la poursuite de la chaloupe.
+
+Cette premi\`ere tentative de d\'ebarquement \'etait
+trop mal\-heu\-reuse pour \^etre renouvel\'ee;
+tel fut du moins l'avis du capitaine Bligh.
+
+<C'est maintenant qu'il faudra prendre une r\'esolution,
+dit-il. La sc\`ene qui vient de se passer \`a Tofoa
+se renouvellera, j'en suis certain, \`a Tonga-Tabou,
+et partout o\`u nous voudrons accoster. En petit nombre,
+sans armes \`a feu, nous serons absolument \`a la
+merci des indig\`enes. Priv\'es d'objets
+d'\'echange, nous ne pouvons acheter de vivres,
+et il nous est impossible de nous les procurer de vive force.
+Nous sommes donc r\'eduits \`a nos seules
+ressources. Or, vous savez comme moi, mes amis, combien
+elles sont mis\'erables! Mais ne vaut-il pas mieux
+s'en contenter que de risquer, \`a chaque atterrissage,
+la vie de plusieurs d'entre nous? Cependant, je ne veux en
+rien vous dissimuler l'horreur de notre situation.
+Pour atteindre Timor, nous avons \`a peu pr\`es
+douze cents lieues \`a franchir, et il faudra vous
+contenter d'une once de biscuit par jour et d'un quart
+de pinte d'eau! Le salut est \`a ce prix seulement,
+et encore, \`a la condition que je trouverai en vous
+la plus compl\`ete ob\'eissance.
+R\'epondez-moi sans arri\`ere-pens\'ee!
+Consentez-vous \`a tenter l'entreprise? 
+Jurez-vous d'ob\'eir \`a mes ordres quels
+qu'ils soient? Promettez-vous de vous soumettre
+sans murmure \`a ces privations?
+
+--- Oui, oui, nous le jurons! s'\'ecri\`erent
+d'une commune voix les compagnons de Bligh.
+
+--- Mes amis, reprit le capitaine, il faut aussi oublier
+nos torts r\'eciproques, nos antipathies et nos haines,
+sacrifier en un mot nos rancunes personnelles \`a
+l'int\'er\^et de tous, qui doit seul nous guider!
+
+--- Nous le promettons.
+
+--- Si vous tenez votre parole, ajouta Bligh, et, au besoin,
+je saurai vous y forcer, je r\'eponds du salut.>
+
+La route fut faite alors vers l'O.-N.-O. Le vent,
+qui \'etait assez fort, souilla en temp\^ete
+dans la soir\'ee du 4 mai. Les lames devinrent
+si grosses, que l'embarcation disparaissait entre elles,
+et semblait ne pouvoir se relever. Le danger augmentait
+\`a chaque instant. Tremp\'es et glac\'es,
+les malheureux n'eurent pour se r\'econforter,
+ce jour-l\`a, qu'une tasse \`a th\'e de rhum et
+le quart d'un fruit \`a pain \`a moiti\'e pourri.
+
+\pageinsert
+\vskip 15cm
+\centerline{\fig{img/bounty3.jpg}}
+\smallskip
+\centerline{\it <Les lames devinrent si grosses...>}
+\vfill
+\endinsert
+
+Le lendemain et les jours suivants, la situation
+ne changea pas. L'embarcation passa au milieu
+d'{\^\i}les innombrables, d'o\`u quelques
+pirogues se d\'etach\`erent.
+
+Etait-ce pour lui donner la chasse, \'etait-ce
+pour faire quelques \'echanges? Dans le doute,
+il aurait \'et\'e imprudent de s'arr\^eter.
+Aussi, la chaloupe, les voiles gonfl\'ees par un bon vent,
+les eut bient\^ot laiss\'ees loin derri\`ere elle.
+
+Le 9 mai, un orage \'epouvantable \'eclata.
+Le tonnerre, les \'eclairs se succ\'edaient
+sans interruption. La pluie tombait avec une force
+dont les plus violents orages de nos climats ne peuvent
+donner une id\'ee. Il \'etait impossible
+de faire s\'echer les v\^etements.
+Bligh, alors, eut l'id\'ee de les tremper dans
+l'eau de mer et de les impr\'egner de sel, afin
+de ramener \`a la peau un peu de la chaleur
+enlev\'ee par la pluie. Toutefois, ces pluies
+torrentielles, qui caus\`erent tant de souffrances
+au capitaine et \`a ses compagnons, leur
+\'epargn\`erent d'autres tortures encore
+plus horribles, les tortures de la soif, qu'une insoutenable
+chaleur e\^ut bient\^ot provoqu\'ees.
+
+Le 17 mai, au matin, \`a la suite d'un orage terrible,
+les plaintes devinrent unanimes:
+
+<Jamais nous n'aurons la force d'atteindre la Nouvelle-Hollande,
+s'\'ecri\`erent les malheureux. Transperc\'es
+par la pluie, \'epuis\'es de fatigue, n'aurons-nous
+jamais un moment de repos! A demi morts de faim,
+n'augmenterez-vous pas nos rations, capitaine? Peu importe
+que nos vivres s'\'epuisent! Nous trouverons facilement
+\`a les remplacer en arrivant \`a la Nouvelle-Hollande!
+
+--- Je refuse, r\'epondit Bligh.
+Ce serait agir comme des fous.
+Comment! nous n'avons franchi que la moiti\'e
+de la distance qui nous s\'epare de l'Australie,
+et vous \^etes d\'ej\`a d\'ecourag\'es!
+Croyez-vous, d'ailleurs, pouvoir trouver facilement des
+vivres sur la c\^ote de la Nouvelle-Hollande?
+Vous ne connaissez donc pas le pays et ses habitants.>
+
+Et Bligh se mit \`a peindre \`a grands traits
+la nature du sol, les m{\oe}urs des indig\`enes,
+le peu de fonds qu'il fallait faire sur leur accueil,
+toutes choses que son voyage avec le capitaine Cook
+lui avait appris \`a conna{\^\i}tre.
+Pour cette fois encore, ses infortun\'es compagnons
+l'\'ecout\`erent et se turent.
+
+Les quinze jours suivants furent \'egay\'es
+par un clair soleil, qui permit de s\'echer les
+v\^etements. Le 27 furent franchis les brisants
+qui bordent la c\^ote orientale de la Nouvelle-Hollande.
+La mer \'etait calme derri\`ere cette ceinture
+madr\'eporique, et quelques groupes d'{\^\i}les,
+\`a la v\'eg\'etation exotique,
+r\'ejouissaient les regards.
+
+On d\'ebarqua en ne s'avan\c{c}ant qu'avec
+pr\'ecaution. On ne trouva d'autres traces du
+s\'ejour des naturels que d'anciennes places
+\`a feu. Il \'etait donc possible de passer
+une bonne nuit \`a terre.
+Mais il fallait manger. Par bonheur, un des matelots
+d\'ecouvrit un banc d'hu{\^\i}tres.
+Ce fut un v\'eritable r\'egal.
+
+Le lendemain, Bligh trouva dans la chaloupe un verre
+grossissant, un briquet et du soufre. Il fut donc \`a
+m\^eme de se procurer du feu pour faire cuire le gibier
+ou le poisson.
+
+Bligh eut alors la pens\'ee de diviser son
+\'equipage en trois escouades: l'une devait tout
+mettre en ordre dans l'embarcation; les deux autres,
+aller \`a la recherche des vivres. Mais plusieurs
+hommes se plaignirent avec amertume, d\'eclarant
+qu'ils aimaient mieux se passer de d{\^\i}ner que de
+s'aventurer dans le pays.
+
+L'un d'eux, plus violent ou plus \'enerv\'e
+que ses camarades, alla m\^eme jusqu'\`a dire
+au capitaine:
+
+<Un homme en vaut un autre, et je ne vois pas pourquoi
+vous resteriez toujours \`a vous reposer!
+Si vous avez faim, allez chercher de quoi manger!
+Pour ce que vous faites ici, je vous remplacerai bien!>
+
+Bligh, comprenant que cet esprit de mutinerie devait
+\^etre enray\'e sur-le-champ, saisit un coutelas,
+et, en jetant un autre aux pieds du rebelle, il lui cria:
+
+<D\'efends-toi, ou je te tue comme un chien!>
+
+Cette attitude \'energique fit aussit\^ot rentrer
+le mutin en lui-m\^eme, et le m\'econtentement
+g\'en\'eral se calma.
+
+Pendant cette rel\^ache, l'\'equipage de la chaloupe
+r\'ecolta abondamment des hu{\^\i}tres, des peignes%
+\fn{$^1$}{Esp\`ece de coquillage.} et de l'eau douce.
+
+Un peu plus loin, dans le d\'etroit de l'Endeavour,
+de deux d\'e\-ta\-che\-ments envoy\'es \`a la chasse
+des tortues et des noddis\fn{$^2$}{Sorte d'oiseaux
+({\it Anous stolidus\/}).}, le premier revint les mains vides;
+le second rapporta six noddis, mais il en aurait pris bien
+davantage sans l'obstination de l'un des chasseurs, qui,
+s'\'etant \'ecart\'e de ses camarades,
+effraya ces oiseaux. Cet homme avoua, plus tard,
+qu'il s'\'etait empar\'e de neuf de ces
+volatiles et qu'il les avait mang\'es crus sur place.
+
+Sans les vivres et l'eau douce qu'il venait de trouver sur
+la c\^ote de la Nouvelle-Hollande, il est bien certain que
+Bligh et ses compagnons auraient p\'eri. D'ailleurs, tous
+\'etaient dans un \'etat lamentable, h\^aves, d\'efaits,
+\'epuis\'es|--|de v\'eritables cadavres.
+
+Le voyage en pleine mer, pour gagner Timor, ne fut que
+la douloureuse r\'ep\'etition des souffrances d\'ej\`a
+endur\'ees par ces malheureux avant d'atteindre les
+c\^otes de la Nouvelle-Hollande.
+Seulement, la force de r\'esistance avait diminu\'e
+chez tous, sans exception. Au bout de quelques jours,
+leurs jambes \'etaient enfl\'ees. Dans cet \'etat de
+faiblesse extr\^eme, ils \'etaient accabl\'es par une
+envie de dormir presque continuelle. C'\'etaient
+les signes avant-coureurs d'une fin qui ne pouvait
+tarder beaucoup. Aussi Bligh, qui s'en aper\c{c}ut,
+distribua une double ration aux plus affaiblis
+et s'effor\c{c}a de leur rendre un peu d'espoir.
+
+Enfin, le 12 juin au matin, la c\^ote de Timor apparut,
+apr\`es trois mille six cent dix-huit lieues d'une
+travers\'ee accomplie dans des conditions \'epouvantables.
+
+L'accueil que les Anglais re\c{c}urent \`a Coupang
+fut des plus sympathiques. Ils y rest\`erent deux mois
+pour se refaire. Puis, Bligh, ayant achet\'e un petit schooner,
+gagna Batavia, o\`u il s'embarqua pour l'Angleterre.
+
+Ce fut le 14 mars 1790 que les abandonn\'es d\'ebarqu\`erent
+\`a Ports\-mouth. Le r\'ecit des tortures qu'ils avaient
+endur\'ees excita la sympathie universelle et l'indignation
+de tous les gens de c{\oe}ur. Presque aussit\^ot, l'Amiraut\'e
+proc\'edait \`a l'armement de la fr\'egate {\sl La Pandore},
+de vingt-quatre canons et de cent soixante hommes
+d'\'equipage, et l'envoyait \`a la poursuite
+des r\'evolt\'es de la {\sl Bounty}.
+On va voir ce qu'ils \'etaient devenus.
+
+\vfill\eject
+
+
+\topglue 5pc
+\centerline{\sf III}
+\bigskip
+\centerline{\sf LES R\'EVOLT\'ES}
+\vskip 2pc
+\noindent
+Apr\`es que le capitaine Bligh eut \'et\'e abandonn\'e en
+pleine mer, la {\sl Bounty\/} avait fait voile pour Tahiti.
+Le jour m\^eme, elle atteignait Touboua\"\i. Le riant aspect
+de cette petite {\^\i}le, entour\'ee d'une ceinture
+de roches madr\'eporiques, invitait Christian \`a y descendre;
+mais les d\'emonstrations des habitants parurent trop
+mena\c{c}antes, et le d\'ebarquement ne fut pas effectu\'e.
+
+Ce fut le 6 juin 1789 que l'ancre tomba dans la rade
+de Matava\"\i. La surprise des Tahitiens fut extr\^eme
+en reconnaissant la {\sl Bounty}. Les r\'evolt\'es
+retrouv\`erent l\`a les indig\`enes avec lesquels ils
+avaient \'et\'e en rapport dans une pr\'ec\'edente
+rel\^ache, et ils leur racont\`erent une fable,
+\`a laquelle ils eurent soin de m\^eler le nom du
+capitaine Cook, dont les Tahitiens avaient conserv\'e
+le meilleur souvenir.
+
+Le 29~juin, les r\'evolt\'es repartirent pour
+Touboua{\"\i} et se mirent en qu\^ete de quelque
+{\^\i}le qui f\^ut situ\'ee en dehors de la route
+ordinaire des b\^atiments, dont le sol f\^ut assez
+fertile pour les nourrir, et sur laquelle ils pussent vivre
+en toute s\'ecurit\'e.
+Ils err\`erent ainsi d'archipel en archipel,
+commettant toutes sortes de d\'epr\'edations
+et d'exc\`es, que l'autorit\'e de Christian
+ne parvenait que bien rarement \`a pr\'evenir.
+
+Puis, attir\'es encore une fois par la fertilit\'e
+de Tahiti, par les m{\oe}urs douces et faciles de ses
+habitants, ils regagn\`erent la baie de Matava\"\i.
+L\`a, les deux tiers de l'\'equipage descendirent
+aussit\^ot \`a terre. Mais, le soir m\^eme,
+la {\sl Bounty\/} avait lev\'e l'ancre et disparu,
+avant que les matelots d\'ebarqu\'es eussent pu
+soup\c{c}onner l'intention de Christian de partir sans eux.
+
+\pageinsert
+\vskip 15cm
+\centerline{\fig{img/bounty4.jpg}}
+\smallskip
+\centerline{\it <L'ancre tomba dans la rade de Matava\"\i.>}
+\vfill
+\endinsert
+
+Livr\'es \`a eux-m\^emes, ces hommes s'\'etablirent
+sans trop de regrets dans diff\'erents districts de
+l'{\^\i}le. Le ma{\^\i}tre d'\'equipage Stewart et
+le midshipman Peter Heywood, les deux officiers que
+Christian avait except\'es de la condamnation
+prononc\'ee contre Bligh, et avait emmen\'es
+malgr\'e eux, rest\`erent \`a Matava{\"\i}
+aupr\`es du roi Tippao, dont Stewart \'epousa
+bient\^ot la s{\oe}ur. Morrison et Millward se rendirent
+aupr\`es du chef P\'eno, qui leur fit bon accueil.
+Quant aux autres matelots, ils s'enfonc\`erent dans
+l'int\'erieur de l'{\^\i}le et ne tard\`erent
+pas \`a \'epouser des Tahitiennes.
+
+Churchill et un fou furieux nomm\'e Thompson, apr\`es
+avoir commis toute sorte de crimes, en vinrent tous
+deux aux mains. Churchill fut tu\'e dans cette lutte,
+et Thompson lapid\'e par les naturels. Ainsi p\'erirent
+deux des r\'evolt\'es qui avaient pris la plus grande
+part \`a la r\'ebellion. Les autres surent, au contraire,
+par leur bonne conduite, se faire ch\'erir des Tahitiens.
+
+Cependant, Morrison et Millward voyaient toujours
+le ch\^atiment suspendu sur leurs t\^etes et
+ne pouvaient vivre tranquilles dans cette {\^\i}le
+o\`u ils auraient \'et\'e facilement d\'ecouverts.
+Ils con\c{c}urent donc le dessein de construire un schooner,
+sur lequel ils essayeraient de gagner Batavia,
+afin de se perdre au milieu du monde civilis\'e.
+Avec huit de leurs compagnons, sans autres outils que ceux
+du charpentier, ils parvinrent, non sans peine,
+\`a construire un petit b\^atiment qu'ils
+appel\`erent la {\sl R\'esolution},
+et ils l'amarr\`erent dans une baie derri\`ere
+une des pointes de Tahiti, nomm\'ee la pointe V\'enus.
+Mais l'impossibilit\'e absolue o\`u ils se trouvaient
+de se procurer des voiles les emp\^echa de prendre la mer.
+
+Pendant ce temps, forts de leur innocence, Stewart
+cultivait un jardin, et Peter Heywood r\'eunissait
+les mat\'eriaux d'un vocabulaire, qui fut, plus tard,
+d'un grand secours aux missionnaires anglais.
+
+Cependant, dix-huit mois s'\'etaient \'ecoul\'es
+lorsque, le 23~mars 1791, un vaisseau doubla la pointe
+V\'enus et s'arr\^eta dans la baie Matava\"\i.
+C'\'etait la {\sl Pandore}, envoy\'ee \`a la poursuite
+des r\'evolt\'es par l'Amiraut\'e anglaise.
+
+Heywood et Stewart s'empress\`erent de se rendre
+\`a bord, d\'e\-cla\-r\`erent leurs noms
+et qualit\'es, racont\`erent qu'ils n'avaient
+pris aucune part \`a la r\'evolte; mais on ne les
+crut pas, et ils furent aussit\^ot mis aux fers,
+ainsi que tous leurs compagnons, sans que la moindre
+enqu\^ete e\^ut \'et\'e faite.
+Trait\'es avec l'inhumanit\'e la plus
+r\'evoltante, charg\'es de cha{\^\i}nes,
+menac\'es d'\^etre fusill\'es s'ils se
+servaient de la langue tahitienne pour converser entre eux,
+ils furent enferm\'es dans une cage de onze pieds
+de long, plac\'ee \`a l'extr\'emit\'e
+du gaillard d'arri\`ere, et qu'un amateur de mythologie
+d\'ecora du nom de <bo{\^\i}te de Pandore>.
+
+Le 19~mai, la {\sl R\'esolution}, qui avait
+\'et\'e pourvue de voiles, et la {\sl Pandore\/}
+reprirent la mer. Pendant trois mois, ces deux b\^atiments
+crois\`erent \`a travers l'archipel des Amis,
+o\`u l'on supposait que Christian et le reste des
+r\'evolt\'es avaient pu se r\'efugier.
+La {\sl R\'esolution}, d'un faible tirant d'eau,
+rendit m\^eme de grands services pendant cette
+croisi\`ere; mais elle disparut dans les parages
+de l'{\^\i}le Chatam, et, bien que la {\sl Pandore\/}
+f\^ut rest\'ee plusieurs jours en vue, jamais
+on n'en entendit parler, ni des cinq marins qui la montaient.
+
+La {\sl Pandore\/} avait repris la route d'Europe avec
+ses prisonniers, lorsque, dans le d\'etroit de Torr\`es,
+elle donna contre un \'ecueil de corail et sombra
+presque aussit\^ot avec trente et un de ses matelots
+et quatre des r\'evolt\'es.
+
+L'\'equipage et les prisonniers, qui avaient
+\'echapp\'e au naufrage, gagn\`erent
+alors un {\^\i}lot sablonneux.
+L\`a, les officiers et les matelots purent
+s'abriter sous des tentes ; mais les rebelles,
+expos\'es aux ardeurs d'un soleil vertical,
+furent r\'eduits, pour trouver un peu de
+soulagement, \`a s'enfoncer dans le sable jusqu'au cou.
+
+Les naufrag\'es rest\`erent sur cet {\^\i}lot
+pendant quelques jours; puis, tous gagn\`erent Timor
+dans les chaloupes de la {\sl Pandore}, et la surveillance
+si rigoureuse dont les mutins \'etaient l'objet
+ne fut pas un moment n\'eglig\'ee,
+malgr\'e la gravit\'e des circonstances.
+
+Arriv\'es en Angleterre au mois de juin 1792,
+les r\'evolt\'es pass\`erent devant un
+conseil de guerre pr\'esid\'e par l'amiral Hood.
+Les d\'ebats dur\`erent six jours et se
+termin\`erent par l'acquittement de quatre des
+accus\'es et la condamnation \`a mort des six autres,
+pour crime de d\'esertion et enl\`evement
+du b\^atiment confi\'e \`a leur garde.
+Quatre des condamn\'es furent pendus \`a bord
+d'un vaisseau de guerre; les deux autres, Stewart
+et Peter Heywood, dont l'innocence avait enfin \'et\'e
+reconnue, furent graci\'es.
+
+Mais qu'\'etait devenue la {\sl Bounty\/}?
+Avait-elle fait naufrage avec les derniers des
+r\'evolt\'es? Voil\`a ce qu'il
+\'etait impossible de savoir.
+
+En 1814, vingt-cinq ans apr\`es la sc\`ene
+par laquelle ce r\'ecit commence, deux navires de guerre
+anglais croisaient en Oc\'eanie sous le commandement
+du capitaine Staines.
+Ils se trouvaient, au sud de l'archipel Dangereux,
+en vue d'une {\^\i}le montagneuse et volcanique
+que Carteret avait d\'ecouverte dans son voyage
+autour du monde, et \`a laquelle il avait donn\'e
+le nom de Pitcairn.
+Ce n'\'etait qu'un c\^one, presque sans rivage,
+qui s'\'elevait \`a pic au-dessus de la mer,
+et que tapissaient jusqu'\`a sa cime des for\^ets
+de palmiers et d'arbres \`a pain.
+Jamais cette {\^\i}le n'avait \'et\'e visit\'ee;
+elle se trouvait \`a douze cents milles de Tahiti, par
+$25^\circ\,4'$ de latitude sud et $180^\circ\,8'$%
+\fn{$^3$}{Faute d'impression? Longitude correcte: $133^\circ\,6'$}
+de longitude ouest; elle ne mesurait que quatre milles
+et demi \`a sa circonf\'erence, et un mille et demi
+seulement \`a son grand axe, et l'on n'en savait que
+ce qu'en avait rapport\'e Carteret.
+
+Le capitaine Staines r\'esolut de la reconna{\^\i}tre
+et d'y chercher un endroit convenable pour d\'ebarquer.
+
+En s'approchant de la c\^ote, il fut surpris d'apercevoir
+des cases, des plantations, et, sur la plage, deux naturels
+qui, apr\`es avoir lanc\'e une embarcation \`a
+la mer et travers\'e habilement le ressac,
+se dirig\`erent vers son b\^atiment.
+Mais son \'etonnement n'eut plus de bornes lorsqu'il
+s'entendit interpeller, en excellent anglais, par cette phrase:
+
+<H\'e! vous autres, allez-vous nous jeter une corde,
+que nous montions \`a bord!>
+
+\`A peine arriv\'es sur le pont, les deux robustes
+rameurs furent entour\'es par les matelots stup\'efaits,
+qui les accablaient de questions auxquelles ils ne savaient
+que r\'epondre. Conduits devant le commandant,
+ils furent interrog\'es r\'eguli\`erement.
+
+<Qui \^etes-vous?
+
+--- Je m'appelle Fletcher Christian, et mon camarade, Young.>
+
+Ces noms ne disaient rien au capitaine Staines, qui \'etait
+bien loin de penser aux survivants de la {\sl Bounty}.
+
+<Depuis quand \^etes-vous ici?
+
+--- Nous y sommes n\'es.
+
+--- Quel \^age avez-vous?
+
+--- J'ai vingt-cinq ans, r\'epondit Christian, et Young dix-huit.
+
+--- Vos parents ont-ils \'et\'e jet\'es
+sur cette {\^\i}le par quelque naufrage?>
+
+Christian fit alors au capitaine Staines l'\'emouvante
+confession qui va suivre et dont voici les principaux traits:
+
+En quittant Tahiti, o\`u il abandonnait vingt et un
+de ses camarades, Christian, qui avait \`a bord de
+la {\sl Bounty\/} le r\'ecit de voyage du capitaine Carteret,
+s'\'etait dirig\'e directement vers l'{\^\i}le Pitcairn,
+dont la position lui avait sembl\'e convenir au but qu'il se
+proposait. Vingt-huit hommes composaient encore l'\'equipage
+de la {\sl Bounty\/}. C'\'etaient Christian, l'aspirant Young
+et sept matelots, six Tahitiens pris \`a Tahiti, dont trois
+avec leurs femmes et un enfant de dix mois, plus trois hommes
+et six femmes, indig\`enes de Touboua\"\i. % Roubouaï?
+
+Le premier soin de Christian et de ses compagnons, d\`es
+qu'ils eurent atteint l'{\^\i}le Pitcairn, avait \'et\'e
+de d\'etruire la {\sl Bounty}, afin de n'\^etre pas
+d\'ecouverts. Sans doute, ils s'\'etaient enlev\'e
+par l\`a toute possibilit\'e de quitter l'{\^\i}le,
+mais le soin de leur s\'ecurit\'e l'exigeait.
+
+L'\'etablissement de la petite colonie ne devait pas
+se faire sans difficult\'es, avec des gens qu'unissait
+seule la solidarit\'e d'un crime. De sanglantes querelles
+avaient \'eclat\'e bient\^ot entre les Tahitiens
+et les Anglais. Aussi, en 1794, quatre des mutins survivaient-ils
+seulement. Christian \'etait tomb\'e sous le couteau
+de l'un des indig\`enes qu'il avait amen\'es.
+Tous les Tahitiens avaient \'et\'e massacr\'es.
+
+Un des Anglais, qui avait trouv\'e le moyen de fabriquer
+des spi\-ri\-tueux avec la racine d'une plante indig\`ene,
+avait fini par s'abrutir dans l'ivresse, et, pris d'un acc\`es
+de {\sl delirium tremens}, s'\'etait pr\'ecipit\'e
+du haut d'une falaise dans la mer.
+
+Un autre, en proie \`a un acc\`es de folie furieuse,
+s'\'etait jet\'e sur Young et sur un des matelots, nomm\'e
+John Adams, qui s'\'etaient vus forc\'es de le tuer. En
+1800, Young \'etait mort pendant une violente crise d'asthme.
+
+John Adams fut alors le dernier survivant de l'\'equipage
+des r\'evolt\'es.
+
+Rest\'e seul avec plusieurs femmes et vingt enfants,
+n\'es du mariage de ses camarades avec les Tahitiennes,
+le caract\`ere de John Adams s'\'etait modifi\'e
+profond\'ement. Il n'avait que trente-six ans alors;
+mais, depuis bien des ann\'ees, il avait assist\'e
+\`a tant de sc\`enes de violence et de carnage,
+il avait vu la nature humaine sous de si tristes aspects,
+qu'apr\`es avoir fait un retour sur lui-m\^eme,
+il s'\'etait tout \`a fait amend\'e.
+
+Dans la biblioth\`eque de la {\sl Bounty},
+conserv\'ee sur l'{\^\i}le, se trouvaient une bible
+et plusieurs livres de pri\`eres. John Adams, qui les
+lisait fr\'equemment, se convertit, \'eleva dans
+d'excellents principes la jeune population qui le
+consid\'erait comme un p\`ere, et devint,
+par la force des choses, le l\'egislateur, le grand
+pr\^etre et, pour ainsi dire, le roi de Pitcairn.
+
+Cependant, jusqu'en 1814, ses alarmes avaient \'et\'e
+continuelles. En 1795, un b\^atiment s'\'etant
+approch\'e de Pitcairn, les quatre survivants de la
+{\sl Bounty\/} s'\'etaient cach\'es dans des bois
+inaccessibles et n'avaient os\'e redescendre dans la baie
+qu'apr\`es le d\'epart du navire. M\^eme acte
+de prudence, lorsqu'en 1808, un capitaine am\'ericain%
+\fn{$^4$}{Mayhew Folger}
+d\'ebarqua sur l'{\^\i}le, o\`u il s'empara d'un
+chronom\`etre et d'une boussole, qu'il fit parvenir
+\`a l'Amiraut\'e anglaise; mais l'Amiraut\'e
+ne s'\'emut pas \`a la vue de ces reliques de la
+{\sl Bounty}. Il est vrai qu'elle avait en Europe des
+pr\'eoccupations d'une bien autre gravit\'e,
+\`a cette \'epoque.\fn{$^5$}{La guerre d'ind\'ependence
+espagnole}
+
+\pageinsert
+\vskip 15cm
+\centerline{\fig{img/bounty5.jpg}}
+\smallskip
+\centerline{\it <John Adams \'etait le seul survivant.>}
+\vfill
+\endinsert
+
+Tel fut le r\'ecit fait au commandant Staines par les
+deux naturels, Anglais par leurs p\`eres, l'un fils
+de Christian, l'autre fils d'Young; mais, lorsque Staines
+demanda \`a voir John Adams, celui-ci refusa de se
+rendre \`a bord avant de savoir ce qu'il adviendrait de lui.
+
+Le commandant, apr\`es avoir assur\'e aux deux
+jeunes gens que John Adams \'etait couvert par la
+prescription, puisque vingt-cinq ans s'\'etaient
+\'ecoul\'es depuis la r\'evolte de la {\sl Bounty},
+descendit \`a terre, et il fut re\c{c}u \`a son
+d\'ebarquement par une population compos\'ee de
+quarante-six adultes et d'un grand nombre d'enfants.
+Tous \'etaient grands et vigoureux, avec le type anglais
+nettement accus\'e; les jeunes filles surtout
+\'etaient admirablement belles, et leur modestie leur
+imprimait un caract\`ere tout \`a fait s\'eduisant.
+
+Les lois mises en vigueur dans l'{\^\i}le \'etaient
+des plus simples. Sur un registre \'etait not\'e
+ce que chacun avait gagn\'e par son travail.
+La monnaie \'etait inconnue; toutes les transactions
+se faisaient au moyen de l'\'echange, mais il n'y avait
+pas d'industrie, car les mati\`eres premi\`eres
+manquaient. Les habitants portaient pour tout habillement
+de vastes chapeaux et des ceintures d'herbe.
+La p\^eche et l'agriculture, telles \'etaient
+leurs principales occupations. Les mariages ne se faisaient
+qu'avec la permission d'Adams, et lorsque l'homme avait
+d\'efrich\'e et plant\'e un terrain assez
+vaste pour subvenir \`a l'entretien de sa future famille.
+
+Le commandant Staines, apr\`es avoir recueilli les documents
+les plus curieux sur cette {\^\i}le, perdue dans les parages
+les moins fr\'equent\'es du Pacifique, reprit la mer
+et revint en Europe.
+
+Depuis cette \'epoque, le v\'en\'erable John Adams
+a termin\'e sa carri\`ere si accident\'ee.
+Il est mort en 1829, et a \'et\'e remplac\'e
+par le r\'ev\'erend George Nobbs, qui remplit encore
+dans l'{\^\i}le les fonctions de pasteur, de m\'edecin
+et de ma{\^\i}tre d'\'ecole.
+
+En 1853, les descendants des r\'evolt\'es de la
+{\sl Bounty\/} \'etaient au nombre de cent soixante-dix
+individus. Depuis lors, la population ne fit que
+s'accro{\^\i}tre, et devint si nombreuse, que, trois ans
+plus tard, elle dut s'\'etablir en grande partie
+sur l'{\^\i}le Norfolk, qui avait jusqu'alors servi
+de station pour les convicts.
+Mais une partie des \'emigr\'es regrettaient
+Pitcairn, bien que Norfolk f\^ut quatre fois plus grande,
+que son sol f\^ut remarquable par sa richesse, et que
+les conditions de l'existence y fussent bien plus faciles.
+Au bout de deux ans de s\'ejour, plusieurs familles
+retourn\`erent \`a Pitcairn, o\`u elles
+continuent \`a prosp\'erer.
+
+Tel fut donc le d\'enouement d'une aventure
+qui avait commenc\'e d'une fa\c{c}on si
+tragique. Au d\'ebut, des r\'evolt\'es,
+des assassins, des fous, et maintenant, sous l'influence
+des principes de la morale chr\'etienne et de
+l'instruction donn\'ee par un pauvre matelot
+converti, l'{\^\i}le Pitcairn est devenue la patrie
+d'une population douce, hospitali\`ere, heureuse,
+chez laquelle se retrouvent les m{\oe}urs patriarcales
+des premiers \^ages.
+
+\nobreak\vskip 1pc
+\centerline{\sc FIN}
+\vfill\eject
+
+\endfrench
+
+% p30 (annexe: carte)
+
+\topglue0pc
+\centerline{\sf Annexe $\cdot$ Anhang}
+\vfill
+\hbox to 9.8cm{\hss
+ \special{pdf:image width 15.3cm rotate 90 (map/BountyMap.pdf)}}
+\eject
+
+% p31 (annexe: toponymes)
+
+\begingroup
+\eightpoint\parindent=0pt\parskip=3pt plus 1pt minus 1pt
+\def\:#1:{\par\noindent{\it#1\/}:\enspace\ignorespaces\hangindent1em}%
+\leftline{\bf Ortsnamen \rm in der ungef\"ahren Reihenfolge
+ ihrer Nennung in der Erz\"ahlung.}
+\smallskip
+\:Spithead: ein Teil des Solents, der Meerenge zwischen England
+ und der Isle of Wight, vor Portsmouth; diente der Royal Navy
+ als Liegeplatz f\"ur ihre Schiffe.
+\:Portsmouth: damals wichtigster St\"utzpunkt der Royal Navy.
+\:Antilles: Inselgruppe der Karibik, grenzt das Karibische Meer
+ vom Atlantik ab.
+\:Indes occidentales: die Antillen, welche von Kolumbus irrt\"umlich als
+ Indien erachtet wurden, sp\"ater auch bewusst als Abgrenzung von Ostindien.
+\:Tahiti: Hauptinsel der Gesellschaftsinseln (archipel de la
+ Soci\'et\'e), weit im S\"udpazifik.
+ Hier wurden die Brotfruchtb\"aume ({\sl Artocarpus altilis\/}) geholt.
+\:Matava{\"\i} (la baie de): Bucht im Norden Tahitis. Hier erster
+ Kontakt zwischen Polynesiern und Europ\"aern (James Cook 1768).
+\:pointe V\'enus: Kap am \"ostlichen Ende der Matavai-Bucht.
+ James Cook hat hier den Venus-Transit (Venus zwischen Sonne und
+ Erde) von 1769 beobachtet.
+\:{\^\i}les des Amis: der Archipel von Tonga, fr\"uher
+ Freundschaftsinseln genannt weil James Cook 1773 freundlich
+ empfangen wurde, heute das K\"onigreich Tonga.
+\:Tofoa: Tafua, eine Vulkaninsel etwa 150\,km n\"ordlich
+ von Tongatapu.
+\:Tonga-Tabou: Tongatapu, die Hauptinsel des heutigen
+ K\"onigreichs Tonga.
+\:Timor: die heutige Insel Timor, n\"ordlich von Australien.
+\:Nouvelle-Hollande: Australien vor der Besitznahme durch
+ die Briten.
+\:d\'etroit de l'Endeavour: s\"udlicher Teil der Torresstrasse.
+\:d\'etroit de Torr\`es: Torresstrasse, Meerenge zwischen
+ Australien und Neuguinea, 150\,km breit, geringe Tiefe,
+ viele Inseln, Sandb\"anke, Korallenriffe, Klippen.
+\:Coupang: die Stadt Kupang auf Timor, damals unter
+ holl\"andischer Verwaltung.
+\:Batavia: das heutige Jakarta, damals das
+ Hauptquartier der Niederl\"andischen Ostindien-Kompanie.
+ Batavia ist der lateinische Name f\"ur die Niederlande.
+\:Touboua\"\i: Tubuai, kleine Vulkaninsel umgeben von einem
+ Korallenriff, 650\,km s\"udlich von Tahiti,
+ heute zu franz\"osisch Polynesien geh\"orend (wie auch Tahiti).
+\:{\^\i}le Chatam: unklar, sicher {\it nicht\/} die Chathaminseln
+ \"ostlich von Neuseeland.
+\:archipel Dangereux: die Tuamotu-Inseln im S\"udpazifik;
+ wegen der vielen Riffe fr\"uher auch Gef\"ahrliche Inseln genannt.
+\:Pitcairn: einsame Insel im S\"udpazifik, 1767 von Philipp
+ Carteret entdeckt und nach einem Seekadetten benannt,
+ jedoch mit ungenauen Koordinaten ver\-merkt; Bligh und Christian
+ wussten wohl davon und Christian hat die Insel wiedergefunden.
+ Seit 1838 britisches \"Uberseegebiet und immer noch bewohnt.
+\:Norfolk: Insel zwischen Australien und Neuseeland;
+ zeitweise britische Straf\-ko\-lo\-nie;
+ ab 1856 neue Heimat f\"ur einen Teil der Nachkommen der Bounty-Meuterer.
+\medbreak
+{\bf Masseinheiten.}
+{\it Lieue\/}: eigentlich Leuge, Wegstunde, etwa 4\,km; hier eher die
+ nautische Meile womit die ``3618 lieues'' etwa 6500\,km entsprechen.  
+{\it Once\/}: Unze, etwa 30 Gramm.
+{\it Pinte\/}: Pinte, nicht einheitlich,
+ hier wohl die Pariser Pinte (etwa 1~Liter).
+{\it Toise\/}: altes L\"angenmass, 6~Fuss oder knapp 2~Meter.
+\medbreak
+{\bf Glossar.}
+{\it Vergue d'artimon\/}: Besanrah (Segelstange am hintersten Mast).
+{\it Roches madr\'eporiques\/}: Korallenfelsen.
+{\it Gaillard d'arri\`ere\/}: Achterdeck.
+
+\endgroup
+\vfill\eject
+
+% p32 (multiple of four)
+
+\topglue5pc
+\vfill\nopagenumbers
+\centerline{\eightpoint Verne: Les R\'evolt\'es de la Bounty}
+\centerline{\eightpoint \copytext}
+\supereject % also eject pending insertions, if any
+
+\end
+

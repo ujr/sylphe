@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="64"
+   height="64"
+   id="svg3368"
+   version="1.1"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   viewBox="0 0 64 64"
+   sodipodi:docname="ElementAir.svg"
+   inkscape:export-filename="/home/ujr/sylphe/art/ElementAir240.png"
+   inkscape:export-xdpi="300"
+   inkscape:export-ydpi="300"
+   enable-background="new">
+  <defs
+     id="defs3370">
+    <inkscape:path-effect
+       effect="vonkoch"
+       id="path-effect5742"
+       is_visible="false"
+       ref_path="m 1.5273438,29.52832 60.9453122,0"
+       generator="m 1.5273438,60 20.3151042,0 m 20.315104,0 20.315104,0"
+       similar_only="false"
+       nbgenerations="1"
+       drawall="true"
+       maxComplexity="1000" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect5740"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="powerstroke"
+       id="path-effect5738"
+       is_visible="false"
+       offset_points="0,8 | 5.5,8"
+       sort_points="true"
+       interpolator_type=""
+       interpolator_beta="0.2"
+       start_linecap_type="round"
+       linejoin_type="round"
+       miter_limit="4"
+       end_linecap_type="round" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient5006">
+      <stop
+         style="stop-color:#060606;stop-opacity:1"
+         offset="0"
+         id="stop5008" />
+      <stop
+         style="stop-color:#888888;stop-opacity:1"
+         offset="1"
+         id="stop5010" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient4998">
+      <stop
+         style="stop-color:#00faff;stop-opacity:1"
+         offset="0"
+         id="stop5000" />
+      <stop
+         style="stop-color:#0027ff;stop-opacity:0"
+         offset="1"
+         id="stop5002" />
+    </linearGradient>
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4985"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4979"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4242"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4238"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4204"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4200"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4196"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4192"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4188"
+       is_visible="true" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4998"
+       id="linearGradient5004"
+       x1="60"
+       y1="4"
+       x2="32"
+       y2="60"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5006"
+       id="linearGradient5012"
+       x1="32"
+       y1="64"
+       x2="32"
+       y2="0"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="8"
+     inkscape:cx="-2.883718"
+     inkscape:cy="30.890931"
+     inkscape:current-layer="layer2"
+     showgrid="true"
+     inkscape:document-units="px"
+     inkscape:grid-bbox="true"
+     inkscape:snap-grids="true"
+     inkscape:window-width="1533"
+     inkscape:window-height="845"
+     inkscape:window-x="67"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     showborder="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3376"
+       dotted="false"
+       empspacing="4"
+       spacingx="4"
+       spacingy="4" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata3373">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer3"
+     inkscape:label="Background"
+     style="display:inline;opacity:1"
+     sodipodi:insensitive="true">
+    <rect
+       style="opacity:1;fill:url(#linearGradient5012);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:8;stroke-linecap:square;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="rect4153"
+       width="72"
+       height="72"
+       x="-4"
+       y="-4"
+       ry="0" />
+  </g>
+  <g
+     id="layer1"
+     inkscape:label="Element Air Light"
+     inkscape:groupmode="layer"
+     style="display:none"
+     sodipodi:insensitive="true">
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="M 32,1.2910156 18.146484,29 H 8 v 6 h 7.146484 L 3.1464844,59 c 19.2356776,0 38.4713546,0 57.7070316,0 l -12,-24 H 56 V 29 H 45.853516 Z M 32,14.708984 39.144531,29 H 24.855469 Z M 21.855469,35 h 20.289062 l 9,18 H 12.855469 Z"
+       id="path4194"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccccccccccc" />
+  </g>
+  <g
+     style="display:inline;opacity:1"
+     inkscape:label="Element Air Heavy Shadow"
+     id="g4155"
+     inkscape:groupmode="layer"
+     sodipodi:insensitive="true">
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:url(#linearGradient5004);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="M 60,2.90625 34.222656,28.103516 28.125,28.125 20.125,36 h 6.019531 L 1.5917969,60 62.25,60.125 61.300781,36 H 64 v -8 l -3.013672,0.0098 z m -8,18.1875 0.337891,6.947266 -7.210938,0.02539 z M 37.304688,36 H 52.722656 L 53.5,52 21.408203,52.125 Z"
+       id="path4977"
+       inkscape:connector-curvature="0" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Element Air Heavy"
+     style="display:inline">
+    <path
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:medium;line-height:normal;font-family:sans-serif;text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:8;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       d="M 32,-0.94335938 17.527344,28 H 8 v 8 h 5.527344 L 1.5273438,60 H 62.472656 l -12,-24 H 56 V 28 H 46.472656 Z M 32,16.945312 37.527344,28 H 26.472656 Z M 22.472656,36 h 19.054688 l 8,16 H 14.472656 Z"
+       id="path4236"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccccccccccccccccccc" />
+  </g>
+</svg>

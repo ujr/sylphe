@@ -1,0 +1,7 @@
+/*Extra CSS for hs2/index.html*/
+html{background-color:black;min-height:100%}
+body{background-color:#fdf5e6}/*w3-sand*/
+.footer a{text-decoration:none}
+.footer p{color:#ddffdd}/*w3-pale-green*/
+#hs2 ul{padding-left:1ex}
+#hs2 ul li{list-style-type:none;margin-left:0}

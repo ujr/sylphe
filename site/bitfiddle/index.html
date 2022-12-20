@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The Science of the Bit Fiddle</title>
+<meta name="description"
+  content="Analysis of Bitshift Variations in C Minor">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="../css/normalize.css">
+<link rel="stylesheet" href="../css/w3.css">
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="w3-sand">
+
+ <header class="w3-top">
+  <div class="w3-bar w3-black">
+   <strong class="branding w3-bar-item w3-mobile">Sylphe</strong>
+   <span class="w3-right w3-mobile">
+    <a class="w3-button" href="/">Home</a>
+   </span>
+  </div>
+ </header>
+
+ <br><br><!--leave room for sticky nav bar-->
+
+ <div class="w3-container w3-section">
+  <div class="w3-content w3-card-4 w3-pale-green"
+       style="max-width:800px">
+   <header class="w3-container w3-teal">
+    <h1>The Science of the Bit Fiddle</h1>
+   </header>
+   <article id="bitfiddle" class="w3-container">
+
+<p>An analysis of Rob Miles's 2016
+<em>Bitshift Variations in C Minor</em>.</p>
+
+<ul>
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#lab">Laboratory</a></li>
+<li><a href="#sawtooth">Sawtooth Sound</a></li>
+<li><a href="#tuning">Notes and Tuning</a></li>
+<li><a href="#voices">Voices</a></li>
+<li><a href="#variation">Voice Variation</a></li>
+<li><a href="#period">The Period</a></li>
+<li><a href="#harmony">Harmony</a></li>
+<li><a href="#closing">Closing Remarks</a></li>
+<li><a href="#appendix">Appendix</a></li>
+</ul>
+
+<a name="intro"></a>
+<h2>Introduction</h2>
+
+<p>In 2016 Rob Miles
+<a href="http://txti.es/bitshiftvariationsincminor">published</a>
+a very short program called <b>Bitshift Variations in C Minor</b>
+and presents it in a
+<a href="https://www.youtube.com/watch?v=MqZgoNRERY8">YouTube movie</a>.
+Here is a copy if his program:</p>
+
+<pre><code>echo "g(i,x,t,o){return((3&amp;x&amp;(i*((3&amp;i&gt;&gt;16?\"BY}6YB6%\":\"Qj}6jQ6%\")[
+t%8]+51)&gt;&gt;o))&lt;&lt;4);};main(i,n,s){for(i=0;;i++)putchar(g(i,1,n=i&gt;&gt;14,12
+)+g(i,s=i&gt;&gt;17,n^i&gt;&gt;13,10)+g(i,s/3,n+((i&gt;&gt;11)%3),10)+g(i,s/5,8+n-((i&gt;&gt;
+10)%3),9));}"|gcc -xc -&amp;&amp;./a.out|aplay
+</code></pre>
+
+<p>Paste this code into a terminal on your Linux system and listen.
+Or listen to the <a href="https://soundcloud.com/robertskmiles/bitshift-variations-in-c-minor">recording at SoundCloud</a>.
+It starts with one slow-moving voice. A second, faster voice enters.
+Then a third and even a fourth voice! It has the mechanical charms
+of chiptune music of the 1980ies, sure, but be aware that it is
+only 210 bytes of C code that generate this infinite stream of
+<a href="https://en.wikipedia.org/wiki/Pulse-code_modulation">PCM</a>
+sound!</p>
+
+<p>It is <strong>magical</strong>. Absolutely <strong>fascinating</strong>.</p>
+
+<p>And it prompts investigation.
+The author, Rob Miles, explains his feat partially in a
+<a href="https://www.youtube.com/watch?v=MqZgoNRERY8">YouTube movie</a>.
+This article goes into the details and provides some background.
+A <a href="../static/bitfiddle.pdf" title="PDF">one page overview</a> may
+accompany the present analysis.</p>
+<!-- Source files for the one pager and the musical stuff
+     is in http://github.com/ujr/bitfiddle -->
+
+<a name="lab"></a>
+<h2>Laboratory</h2>
+
+Create a shell script, say <i>bitfiddle.sh</i>, and paste the original
+code. Refactor and reformat so that the code looks like this:
+
+<pre><code>cat &lt;&lt; EOT | gcc -xc - &amp;&amp; ./a.out | aplay
+g(i,x,t,o){...}
+main(i){for(i=0;;i++){putchar(...);}}
+EOT
+</code></pre>
+
+<p>For better readability, use
+<b><a href="https://linux.die.net/man/1/cat">cat</a></b> with a
+<a href="https://en.wikipedia.org/wiki/Here_document">here document</a>
+instead of <b><a href="https://linux.die.net/man/1/echo">echo</a></b>
+with a long argument.
+The two middle lines are the C code we want to investigate.
+The first line compiles and runs this code, sending its output
+to the speaker: `-xc` tells the compiler
+<b><a href="https://gcc.gnu.org/">gcc</a></b> that the
+language is C (since it reads from <i>stdin</i>, it cannot
+deduce the language from the file extension);
+<a href="https://en.wikipedia.org/wiki/A.out">a.out</a>
+is the compiled program file; and
+<b><a href="https://linux.die.net/man/1/aplay">aplay</a></b>
+sends unsigned 8-bit sample data from <i>stdin</i> to the
+speaker at a rate of 8000 Hz (the default; command line arguments
+could be used to change sample format and sample rate).</p>
+
+<p>Stretch out the terse C code a bit, so it looks like this:</p>
+
+<pre><code>cat &lt;&lt; EOT | gcc -xc - &amp;&amp; ./a.out | aplay
+g(i,x,t,o){
+  return (3&amp;x&amp;(i*((3&amp;i&gt;&gt;16?"BY}6YB6%":"Qj}6jQ6%")[t%8]+51)&gt;&gt;o))&lt;&lt;4;
+}
+main(i,n,s){
+  for(i=0;;i++)
+    putchar(
+      g(i, 1,       n=i&gt;&gt;14,        12)
+    + g(i, s=i&gt;&gt;17, n^i&gt;&gt;13,        10)
+    + g(i, s/3,     n+((i&gt;&gt;11)%3),  10)
+    + g(i, s/5,     8+n-((i&gt;&gt;10)%3), 9)
+    );
+}
+EOT
+</code></pre>
+
+<p>Now start experimenting:</p>
+
+<ul>
+<li>Run the code and listen to the music.</li>
+<li>Comment all but one of the <code>g(...)</code> lines and listen.</li>
+<li>Set the second parameter to <code>0</code> for one or several of
+  the <code>g(...)</code> lines.</li>
+<li>Modify the last parameter to <code>g(...)</code> and listen.</li>
+</ul>
+
+<p>We find that there are four voices playing at different speeds
+and octaves. The <code>g()</code> function is the PCM generator,
+adding voices is mixing them, and <code>i</code> is the clock.</p>
+
+<a name="sawtooth"></a>
+<h2>Sawtooth Sound</h2>
+
+<p>This aspect of the program is partially explained in the movie.
+Sawtooth sound is easy to generate:</p>
+
+<pre><code>cat &lt;&lt; EOT | gcc -xc - &amp;&amp; ./a.out | aplay -r 8000 -f U8
+main(i) { for (i=0;;i++) putchar(i); }  /* 0..255 */
+EOT
+</code></pre>
+
+<p>While <code>i</code> constantly increases,
+<b><a href="https://linux.die.net/man/3/putchar">putchar</a></b>
+outputs only the low 8 bits of <code>i</code> or <code>i&amp;255</code>
+(technically, it casts <code>i</code> to an <code>unsigned char</code>),
+such that after 255 follows 0 (not 256). The result, when played
+at 8000 Hz, is a very low 8000/256=31 Hz sound.</p>
+
+<p>We need a way to control frequency and amplitude.
+The next few snippets are alternatives for the middle
+line in the script above.</p>
+
+<p>Here masking (bitwise and, <code>&amp;</code>) and bit shifting
+(<code>&lt;&lt;</code> and <code>&gt;&gt;</code>) enter the scene.
+Shifting left is multiplying by powers of two, and shifting right
+is dividing by powers of two.
+Note that masking has lower precedence than bit shifting, so that
+<code>63&amp;i&lt;&lt;2</code> means <code>63 &amp; (i&lt;&lt;2)</code>.
+
+<p><b>(1)</b> Two octaves higher (<code>i&lt;&lt;2</code>
+or 4 times the frequency):</p>
+
+<pre><code>main(i){ for(i=0;;i++) putchar(i&lt;&lt;2); }  /* 0 to 252 in steps of 4 */</code></pre>
+
+<p><b>(2)</b> Same frequency, lower amplitude:</p>
+
+<pre><code>main(i){ for(i=0;;i++) putchar(63&amp;i); }  /* 0..63 in steps of 1 */</code></pre>
+
+<p><b>(3)</b> Amplify to original amplitude:</p>
+
+<pre><code>main(i){ for(i=0;;i++) putchar((63&amp;i)&lt;&lt;2); }  /* 0 to 252 in steps of 4 */</code></pre>
+
+<p><b>(4)</b> Make the sawtooth curve more staircase shaped:
+<code>i&gt;&gt;1</code> grows at half the speed of <code>i</code>,
+so it takes two steps of <code>i</code> until anything can change.
+The result is the sequence 0 0 8 8 16 16 .. 248 248:</p>
+
+<pre><code>main(i){ for(i=0;;i++) putchar((31&amp;i&gt;&gt;1)&lt;&lt;3); }  /* 0 0 8 8 16 16 .. 248 248 */</code></pre>
+
+<p><b>(5)</b> Taking the staircase to the extreme: with
+<code>i&gt;&gt;4</code> (<code>i</code> div 16) it takes 16 steps
+of <code>i</code> until the curve jumps to the next flight; masking
+with 3 wraps around at multiples of 4, so to keep amplitude (volume)
+we multiply with 64 (or left shifting by 6):</p>
+
+<pre><code>main(i){ for(i=0;;i++) putchar((3&amp;i&gt;&gt;4)&lt;&lt;6); }  /* 0:16 64:16 128:16 192:16 */</code></pre>
+
+<p>Two key things to note from the examples above:</p>
+
+<ol>
+<li>Masking increases frequency but decreases volume<br>
+  (63=00111111<sub>2</sub>, 31=00011111<sub>2</sub>, 3=00000011<sub>2</sub>).
+<li>Bitshifting before masking changes the octave (frequency);<br>
+  bitshifting after masking changes the volume (amplitude).</li>
+</ol>
+
+<p>The last two examples have the same frequency and amplitude as
+the third example, but different shapes. In the last example,
+after masking with 3 there are only four possible values: 0, 1, 2, 3.
+Left shifting by 6 yields: 0, 64, 128, 192.
+Because of the right shift by 4 (div 16) the actual sequence of
+values is 16 times 0, 16 times 64, 16 times 128, 16 times 192,
+16 times 0 etc. This is more a staircase than a sawtooth,
+and indeed the last two examples differ in timbre, though
+not in pitch and not in volume.</p>
+
+<p>To achieve intervals other than octaves we have to multiply
+the base frequency by values other than powers of two.
+For example, the perfect fifth is at 3/2 of the base frequency.
+Because here we deal with integers only, we cannot multiply by 1.5
+but instead multiply by 3 and divide by 2 (by right shifting).</p>
+
+<p><b>(6)</b> Let's say this plays a C:</p>
+
+<pre><code>for(i=0;;i++) putchar((3&amp;(i&gt;&gt;3))&lt;&lt;6);</code></pre>
+
+<p><b>(7)</b> Then this plays a G because it is at 3/2 of the frequence
+of example (6); we divide by two by shifting right one more:</p>
+
+<pre><code>for(i=0;;i++) putchar((3&amp;(i*3&gt;&gt;4))&lt;&lt;6);</code></pre>
+
+<p><b>(8)</b> We arrive at this overall structure of a simple
+PCM sound generator, where <var>n</var> is the note (pitch),
+<var>o</var> the octave, and <var>v</var> the volume:</p>
+
+<pre><code>for(i=0;;i++) putchar( (3 &amp; (i*n &gt;&gt; o)) &lt;&lt; v );</code></pre>
+
+<p>After some refactoring and letting <var>v</var> = 4, we can find this
+very structure in Rob Miles's code:</p>
+
+<pre><code>g(i,x,t,o){
+  char *m = 3&amp;(i&gt;&gt;16)?"BY}6YB6%":"Qj}6jQ6%"; // melodic material
+  int n = m[t%8] + 51;                 // note (pitch indicator)
+  return (3 &amp; x &amp; (i*n &gt;&gt; o)) &lt;&lt; 4;    // amplitude at time i
+}
+</code></pre>
+
+<p>The actual values passed in for <var>o</var> are 9, 10, and 12,
+which is large enough to compensate for the small mask of 3 (two
+leftmost bits) and the large values for <var>n</var> (pitch indicator,
+see next section).</p>
+
+<p>The maximum value returned by this generator is 48
+(<code>3&lt;&lt;4</code>), so that the maximum value
+for the four voices added is 192 (4&times;48) and indeed
+<code>putchar</code> will never have to wrap around.</p>
+
+<a name="tuning"></a>
+<h2>Notes and Tuning</h2>
+
+<p>The magic strings <code>"BY}6YB6%"</code> and <code>"Qj}6jQ6%"</code>
+relate to the notes (pitches) being played:</p>
+
+<table class="intonation">
+<tr><th>Char</th><td><tt>'%'</tt></td><td><tt>'6'</tt></td><td><tt>'B'</tt></td><td><tt>'Q'</tt></td><td><tt>'Y'</tt></td><td><tt>'j'</tt></td><td><tt>'}'</tt></td></tr>
+<tr><th>ASCII</th><td>37</td><td>54</td><td>66</td><td>81</td><td>89</td><td>106</td><td>125</td></tr>
+<tr><th>+51</th><td>88</td><td>105</td><td>117</td><td>132</td><td>140</td><td>157</td><td>176</td></tr>
+<tr><th>Ratio</th><td>1</td><td>1.19</td><td>1.32</td><td>1.50</td><td>1.59</td><td>1.78</td><td>2</td></tr>
+<tr><th></th><td>1/1</td><td>6/5</td><td>4/3</td><td>3/2</td><td>8/5</td><td>16/9</td><td>2/1</td><td><i>just intonation</i></td></tr>
+<tr><th>Note</th><td>C</td><td>E&flat;</td><td>F</td><td>G</td><td>A&flat;</td><td>B&flat;</td><td>C'</td><td><i>C minor</i></td></tr>
+</table>
+
+<p>We find that, when 51 is added to the ASCII values of the characters
+in the strings, the ratios approximate the frequency ratios of
+<a href="https://en.wikipedia.org/wiki/Just_intonation">just intonation</a>
+(<a href="https://de.wikipedia.org/wiki/Reine_Stimmung">reine Stimmung</a>).
+If we take <code>'%'</code> for a C, then we get the notes of a C minor
+scale (missing is D at 9/8 = 1.12 or <code>'0'</code>).</p>
+
+<p>Let's turn from sound generation to the creation of music.</p>
+
+<a name="voices"></a>
+<h2>Voices</h2>
+
+<p>We now look at the four voices generated by the code.
+From here on, all references to absolute time duration
+assume playback at 8192 Hz, which is very close to the
+actual playback at 8000 Hz but yields nice figures.</p>
+
+<p>Recall the PCM generator with its four parameters
+<var>i</var> = time, <var>x</var> = on/off,
+<var>t</var> = pitch index, <var>o</var> = octave:</p>
+
+<pre><code>g(i,x,t,o){
+  char *m = 3&amp;(i&gt;&gt;16)?"BY}6YB6%":"Qj}6jQ6%"; // melodic material
+  int n = m[t%8] + 51;                 // note (pitch indicator)
+  return (3 &amp; x &amp; (i*n &gt;&gt; o)) &lt;&lt; 4;    // deflection at time i
+}
+</code></pre>
+
+<p>The “magic strings” are <b>two sets of notes:</b></p>
+<ol>
+<li><code>"BY}6YB6%"</code> corresponds to F A♭ C' E♭ A♭ F E♭ C</li>
+<li><code>"Qj}6jQ6%"</code> corresponds to G B♭ C' E♭ B♭ G E♭ C</li>
+</ol>
+
+<p>The expression <code>3&amp;(i&gt;&gt;16)</code> in the
+<code>g</code> function chooses between the two sets: it
+yields the sequence 0 1 2 3 0 1 2 3 etc and progresses
+every 2<sup>16</sup>=65536 increments of <code>i</code>
+or about every 8 seconds.
+Zero (false) maps to the second set, whereas 1 2 3 (all true)
+map to the first set. Both sets have 8 notes and are indexed
+by <code>t%8</code> so that values t≥8 wrap around.</p>
+
+<p>Therefore, we get notes from the second set for 8 seconds,
+then notes from the first set for 24 seconds.</p>
+
+<p>The main function, after further refactoring, looks like this:</p>
+
+<pre><code>main(i,n,s){
+  for(i=0;;i++){
+    n = i&gt;&gt;14;  // increments every 2 secs
+    s = i&gt;&gt;17;  // increments every 16 secs
+    putchar(
+      g(i, 1,     n,             12)  // 1st voice in 1/1
+    + g(i, s,     n^(i&gt;&gt;13),     10)  // 2nd voice in 1/2 (after 16")
+    + g(i, s/3,   n+((i&gt;&gt;11)%3), 10)  // 3rd voice in 1/8 (after 48")
+    + g(i, s/5, 8+n-((i&gt;&gt;10)%3),  9)  // 4th voice in 1/16 (after 1'20")
+    );
+  }
+}
+</code></pre>
+
+<p>Now it is simple to see that <code>n</code> increments
+every 2<sup>14</sup>=16384 steps of <code>i</code> or about
+every 2 seconds. Similarly, <code>s</code> increments every
+2<sup>17</sup>=131072 steps of <code>i</code> or about every
+16 seconds.</p>
+
+<h3>First Voice</h3>
+
+<p>The first voice is controlled by <code>n</code>, which
+increments every 2 seconds. Within the <code>g</code> function,
+the current set of notes is indexed by <code>n%8</code>, so that
+we get the 1st half of the 2nd set, the 2nd half of the 1st set,
+then the entire 1st set, before the melody repeats:</p>
+
+<pre><code>seq%8:  | 0  1  2  3  : 4  5  6  7  : 0  1  2  3  : 4  5  6  7  |
+  set:  | ----2nd---- : ----1st---- : ----1st---- : ----1st---- |
+notes:  | G  B♭ C' E♭ : A♭ F  E♭ C  : F  A♭ C' E♭ : A♭ F  E♭ C  |
+</code></pre>
+
+<figure class="w3-card-4 w3-center w3-padding w3-white">
+ <img src="img/voice1.png" alt="First Voice" style="max-width:100%"/>
+</figure>
+
+<p>It is the base line and repeats every <b>32 seconds.</b>
+The heavy bar line marks the change between the two
+note sets.</p>
+
+<h3>Second Voice</h3>
+
+<p>The second voice is controlled by <code>n^(i&gt;&gt;13)</code>,
+which changes once every second (2<sup>13</sup> = 8192). It is in
+half notes relative to the first voice and it starts only after
+16 seconds, when <code>s</code> first changes from 0 to 1.
+What melody does it produce?</p>
+
+<p>The values that index the note sets are
+<code>(i&gt;&gt;14)^(i&gt;&gt;13)</code>, that is, the xor of
+a value and twice that value, essentially <code>a^b</code> where
+<var>b=2a</var> (or <var>a=b/2</var>) for increasing values of
+<var>a</var>. Writing the binary representations for small values
+of <var>a</var>, <var>b</var>, and <var>a^b</var> we find:</p>
+
+<pre><code>    a=b/2  b=2a   a^b    dec.  mod 8
+
+    0000   0000   0000     0     0
+    0000   0001   0001     1     1
+    0001   0010   0011     3     3
+    0001   0011   0010     2     2
+
+    0010   0100   0110     6     6
+    0010   0101   0111     7     7
+    0011   0110   0101     5     5
+    0011   0111   0100     4     4
+
+    0100   1000   1100    12     4
+    0100   1001   1101    13     5
+    0101   1010   1111    15     7
+    0101   1011   1110    14     6
+
+    0110   1100   1010    10     2
+    0110   1101   1011    11     3
+    0111   1110   1001     9     1
+    0111   1111   1000     8     0
+</code></pre>
+
+<p>(It turns out that this is a
+<a href="https://en.wikipedia.org/wiki/Gray_code">Gray code</a>,
+which have the property that exactly one bit changes
+between successive numbers in binary representation.)</p>
+
+<p>Remember that the “magic strings” are indexed by
+<code>[t%8]</code>, so only the least significant 3 bits
+of the Gray code are used, and this bit sequence is an
+endless repetition of the “mod 8” column above.</p>
+
+<p>Since each note lasts one second, the first eight notes
+are pulled from the 2nd set, the following 24 notes are
+pulled from the 1st set. The generated melody, in halves
+(relative to the first voice) is as shown below and has
+a period of <b>32 seconds</b>. Again, the heavy bar line
+marks the change between the note sets.</p>
+
+<pre><code>seq%8:  | 0  1  3  2  6  7  5  4  : 4  5  7  6  2  3  1  0 |
+notes:  | G  B♭ E♭ C' E♭ C  G  B♭ : A♭ F  C  E♭ C' E♭ A♭ F :
+          F  A♭ E♭ C' E♭ C  F  A♭ : A♭ F  C  E♭ C' E♭ A♭ F |
+</code></pre>
+
+<figure class="w3-card-4 w3-center w3-padding w3-white">
+ <img src="img/voice2.png" alt="Second Voice" style="max-width:100%"/>
+</figure>
+
+<h3>Third Voice</h3>
+
+<p>The third voice is controlled by <code>n+((i&gt;&gt;11)%3)</code>,
+which changes about 4 times a second (<code>i&gt;&gt;11</code> ≡
+<code>i/2048</code>), so it is in eighth relative to the first voice.
+It starts after about 48 seconds, when <code>s/3</code> first changes
+from 0 to 1.</p>
+
+<p>The expression <code>(i&gt;&gt;11)%3</code> generates the repeating
+sequence 0, 1, 2. To this the value of <code>n</code> (which increments
+every 2 seconds) is added. The period of <code>n+((i&gt;&gt;11)%3)</code>
+(mod 8) is the least common multiple of 3 (the repeating 0 1 2) and 64
+(the length of <code>n%8</code> in eighth), which is 192 eighth or
+24&nbsp;bars or <b>48 seconds</b>. However, because the note set
+selection sequence (2nd 1st 1st 1st) repeats every 32 seconds or
+128&nbsp;eighths, the third voice has a period of lcm(192,128)
+= 384 eights or 48&nbsp;bars or <b>96 seconds</b>.  Here is the
+beginning of the sequence (<tt>M</tt> is the note set, <tt>i'</tt>
+is <tt>(i&gt;&gt;11)%3</tt> and <tt>+</tt> is addition modulo 8):</p>
+
+<pre><code>M  2-----------------------------------------------------------------
+n  0 . . . . . . .  1 . . . . . . .  2 . . . . . . .  3 . . . . . . .
+i' 0 1 2 0 1 2 0 1  2 0 1 2 0 1 2 0  1 2 0 1 2 0 1 2  0 1 2 0 1 2 0 1
++  0 1 2 0 1 2 0 1  3 1 2 3 1 2 3 1  3 4 2 3 4 2 3 4  3 4 5 3 4 5 3 4
+   G B♭C'G B♭C'G B♭ E♭B♭C'E♭B♭C'E♭B♭ E♭B♭C'E♭B♭C'E♭B♭ E♭B♭G E♭B♭G E♭B♭
+
+M  1-----------------------------------------------------------------
+n  4 . . . . . . .  5 . . . . . . .  6 . . . . . . .  7 . . . . . . .
+i' 2 0 1 2 0 1 2 0  1 2 0 1 2 0 1 2  0 1 2 0 1 2 0 1  2 0 1 2 0 1 2 0
++  6 4 5 6 4 5 6 4  6 7 5 6 7 5 6 7  6 7 0 6 7 0 6 7  1 7 0 1 7 0 1 7
+   E♭A♭F E♭A♭F E♭A♭ E♭C F E♭C F E♭C  E♭C F E♭C F E♭C  A♭C F A♭C F A♭C
+
+M  1-----------------------------------------------------------------
+n  8 . . . . . . .  9 . . . . . . .  10. . . . . . .  11. . . . . . .
+i' 1 2 0 1 2 0 1 2  0 1 2 0 1 2 0 1  2 0 1 2 0 1 2 0  1 2 0 1 2 0 1 2
++  1 2 0 1 2 0 1 2  1 2 3 1 2 3 1 2  4 2 3 4 2 3 4 2  4 5 3 4 5 3 4 5
+
+M  1-----------------------------------------------------------------
+n  12. . . . . . .  13. . . . . . .  14. . . . . . .  15. . . . . . .
+i' 0 1 2 0 1 2 0 1  2 0 1 2 0 1 2 0  1 2 0 1 2 0 1 2  0 1 2 0 1 2 0 1
++  4 5 6 4 5 6 4 5  7 5 6 7 5 6 7 5  7 0 6 7 0 6 7 0  7 0 1 7 0 1 7 0
+</code></pre>
+
+<p>And here is the complete 3rd voice, with its tripel rhythm appeal
+generated by <code>%3</code> that overlays the even beats of the two
+lower voices. The beaming shows one possible rhythmic interpretation.</p>
+
+<figure class="w3-card-4 w3-center w3-padding w3-white">
+ <img src="img/voice3.png" alt="Third Voice" style="max-width:100%"/>
+</figure>
+
+<h3>Fourth Voice</h3>
+
+<p>The fourth voice is controlled by <code>8+n-((i&gt;&gt;10)%3)</code>,
+which changes about 8 times a second, so it is in sixteenth relative
+to the first voice. It starts after about 1'20" when <code>s/5</code>
+first changes from 0 to 1.</p>
+
+<p><code>(i&gt;&gt;10)%3)</code> generates the repeating sequence
+0 1 2, as in the third voice, but twice as fast, and 16 times as
+fast as does <code>n</code>.</p>
+
+<p><code>i&gt;&gt;10</code> increments 4 times as fast as does
+<code>n</code>, so <code>n-((i&gt;&gt;10)%3)</code> yields 5 times
+0 -1 -2, plus a single 0 (16 notes), before <code>n</code> increases
+and we get 5 times 0 -1 1 plus a single 0, etc. Adding 8 avoids
+negative numbers. And after mod 8 we find a sequence that starts
+as shown below. Again, after 8 seconds or 64 sixteenth the note set
+changes from <code>"Qj..."</code> to <code>"BY..."</code> and
+after another 24 seconds again back to <code>"Qj..."</code>. This
+fourth voice is a lively, though somewhat nervous, descant.</p>
+
+<pre><code>0  7  6  0  7  6  0  7  6  0  7  6  0  7  6  0
+G  C  E♭ G  C  E♭ G  C  E♭ G  C  E♭ G  C  E♭ G
+
+0  7  1  0  7  1  0  7  1  0  7  1  0  7  1  0
+G  C  B♭ G  C  B♭ G  C  B♭ G  C  B♭ G  C  B♭ G
+</code></pre>
+
+<p>The period is the least common multiple of the duration
+of the <code>0 -1 -2</code> sequence (3 sixteenth) and the
+<code>n%8</code> sequence (128 sixteenth), or 384 sixteenth,
+as in the third voice. However, as the fourth voice plays at
+twice the speed of the third, the cycle through the note sets
+(2nd 1st 1st 1st) takes 256 sixteenth (32 seconds), the period
+is lcm(384,256) or 768 sixteenth 48&nbsp;bars or <b>96 seconds</b>
+(same as 3rd voice).</p>
+
+<figure class="w3-card-4 w3-center w3-padding w3-white">
+ <img src="img/voice4.png" alt="Fourth Voice" style="max-width:100%"/>
+</figure>
+
+<a name="variation"></a>
+<h2>Voice Variation</h2>
+
+<p>The sound generator function <code>g</code> takes a parameter
+<code>x</code> that controls when a voice starts, but not only:
+<code>3&amp;x</code> serves as the “sawtooth mask”. Because of
+the bitwise and with <code>3</code>, there are only four possible
+mask values: <code>00</code>, <code>01</code>, <code>10</code>,
+<code>11</code> (binary). This is what we hear:</p>
+
+<ul>
+<li><code>00</code> – voice off</li>
+<li><code>01</code> – softer, higher octave</li>
+<li><code>10</code> – medium, lower octave</li>
+<li><code>11</code> – louder, lower octave</li>
+</ul>
+
+<p>Assuming <code>n=1</code> and <code>o=0</code> in the
+refactored <code>g</code> function (and remembering the
+<code>&lt;&lt;4</code> (times 16) amplification), it
+generates the following PCM signals:</p>
+
+<ul>
+<li><code>00</code> – generates <code>0 0 0 0</code> (repeat)</li>
+<li><code>01</code> – generates <code>0 16 0 16</code> (repeat)</li>
+<li><code>10</code> – generates <code>0 0 32 32</code> (repeat)</li>
+<li><code>11</code> – generates <code>0 16 32 48</code> (repeat)</li>
+</ul>
+
+<p>The <code>x</code> parameter is used by the four voices as follows:</p>
+
+<p><b>Voice 1:</b> Always 1, so the base line is soft (and an octave
+higher than we'd assumed).</p>
+
+<p><b>Voice 2:</b> Uses <code>x = s</code>, so we have (a) 16 seconds silence,
+before we hear (b) the 2nd half of the melody (bar 9 starting
+with an F), then (c) the 1st half of the melody, louder and
+in the lower octave, then (d) again the 2nd half with full body.
+Then the cycle repeats.</p>
+
+<p><b>Voice 3:</b> Uses <code>x = s/3</code> (integer division) so that the
+3rd voice goes through the same off/soft/medium/full cycle
+as the 2nd voice, but at one third of the speed: each phase
+lasts 48 seconds. The melodic period of the 3rd voice is
+96 seconds, so we “miss” the first half, hear softly the
+2nd half, followed by a loud 1st half, then more gently
+again the 2nd half.</p>
+
+<p><b>Voice 4:</b> Uses <code>x = s/5</code> so the 4th voice, like the 2nd
+and the 3rd, goes through the off/soft/medium/full cycle,
+but each phase now lasts 80 seconds.</p>
+
+<a name="period"></a>
+<h2>The Period</h2>
+
+<p>Periods of the melodies have been indicated before.
+In combination with voice variation we get these results:</p>
+
+<ul>
+<li><p>Voice 1: melodic period is 32 seconds, voice does not
+  vary, so we get an overall period of 32 seconds.</p></li>
+
+<li><p>Voice 2: melodic period is 32 seconds, voice variation
+  period is 4×16 seconds, overall period thus 64 seconds.</p></li>
+
+<li><p>Voice 3: melodic period is 96 seconds, voice variation
+  period is 4×48 or 192 seconds, the combined period is thus
+  192 seconds.</p></li>
+
+<li><p>Voice 4: melodic period is 96 seconds, voice variation
+  is 4×80 or 320 seconds. The least common multiple yields
+  the combined period of 960 seconds.</p></li>
+</ul>
+
+<p>The <b>overall period</b> of the piece is <b>960 seconds</b>
+or <b>16 minutes</b> or 30 times the baseline (voice 1) or
+7,864,320 increments of <code>i</code>. This can be checked
+by ear by changing <code>for(i=0;;i++)</code> to
+<code>for(i=7864320;;i++)</code> in the code.</p>
+
+<a name="harmony"></a>
+<h2>Harmony</h2>
+
+<p>Looking at the two sets of notes, we find that each contains
+the notes of a minor seventh chord:</p>
+
+<ol>
+<li><code>"BY..."</code> consists of F A♭ C E♭ or <b>Fm<sup>7</sup></b></li>
+<li><code>"Qj..."</code> consists of C E♭ G B♭ or <b>Cm<sup>7</sup></b></li>
+</ol>
+
+<p>Shared between the two sets are C and E♭, the D is missing from both.</p>
+
+<figure class="w3-card-4 w3-center w3-padding w3-white">
+<a href="doc/notesets.pdf"><img src="img/notesets.png"
+ alt="The two note sets" style="max-width:100%"/></a></figure>
+
+<p>In this view, the <i>Bitshift Variations</i> boil down to
+8&nbsp;seconds of Cm<sup>7</sup> jingling followed by
+24&nbsp;seconds of Fm<sup>7</sup> jingling.
+Dissonant intervals can and do occur, but will be softened
+by other voices that tend to “fill” the minor seventh chord.</p>
+
+<a name="closing"></a>
+<h2>Closing Remarks</h2>
+
+<p>Remember, this was all integer arithmetics, no floating point.
+Much of the terseness derives from exploiting C's operator
+precedence rules by omitting needless parentheses. Indeed,
+two more parens and one semicolon could be omitted, sparing
+another two (sic) bytes. The arguments to main are really
+just local variables declared using as little code as possible.</p>
+
+<p>The music generated is not super complex, but quite effective.
+Knowing how little code it takes to generate both the music
+and the sound—this makes it so astonishing.
+Valentino Braitenberg coined the “law of downhill synthesis
+and uphill analysis” in his 1986 book <i>Vehicles</i>. Does it
+always hold? I found this article to be a <em>fun</em> analysis of
+a <em>fascinating</em> synthesis: <i>Bitshift Variations in C Minor</i>
+by Rob Miles (2016).</p>
+
+<a name="appendix"></a>
+<h2>Appendix</h2>
+
+<h3>Score Exceprt</h3>
+
+<p>This is how <i>Bitshift Variations in C Minor</i> “look like”
+(excerpt):</p>
+<figure class="w3-card-4 w3-center w3-padding w3-white">
+<a href="doc/score.pdf"><img src="img/score.png"
+ alt="Score (excerpt)" style="max-width:100%"/></a></figure>
+
+<h3>Times</h3>
+
+<p>The tune is played at 8000 samples per second, the default
+sampling rate of the <b>aplay</b> tool. Since this is about
+2<sup>13</sup> = 8192, we get the following clock divisors
+and corresponding frequencies and note values:
+
+<table>
+<tr><th>Divisor</th><th>Frequency</th><th>Note Value</th></tr>
+<tr><td><tt>i&gt;&gt;10</tt> &equiv; <tt>&nbsp;&nbsp;i/1024</tt></td><td>8 times per second</td><td>sixteenth</td></tr>
+<tr><td><tt>i&gt;&gt;11</tt> &equiv; <tt>&nbsp;&nbsp;i/2048</tt></td><td>4 times per second</td><td>eighth</td></tr>
+<tr><td><tt>i&gt;&gt;12</tt> &equiv; <tt>&nbsp;&nbsp;i/4096</tt></td><td>2 times per second</td><td></td></tr>
+<tr><td><tt>i&gt;&gt;13</tt> &equiv; <tt>&nbsp;&nbsp;i/8192</tt></td><td>once per second</td><td>half</td></tr>
+<tr><td><tt>i&gt;&gt;14</tt> &equiv; <tt>&nbsp;i/16384</tt></td><td>two seconds</td><td>whole</td></tr>
+<tr><td><tt>i&gt;&gt;15</tt> &equiv; <tt>&nbsp;i/32768</tt></td><td></td><td></td></tr>
+<tr><td><tt>i&gt;&gt;16</tt> &equiv; <tt>&nbsp;i/65536</tt></td><td></td><td></td></tr>
+<tr><td><tt>i&gt;&gt;17</tt> &equiv; <tt>i/131072</tt></td><td>16 seconds</td><td></td></tr>
+</table>
+
+<h3>Notes on C</h3>
+
+<p>The default type is <code>int</code>, both for parameters
+and function return values. Therefore, <code>main(i)</code>
+is short for <code>int main(int i)</code>, and similarly for
+<code>g(i,x,t,o)</code>, which has four parameters of type
+<code>int</code> and returns an <code>int</code>.</p>
+
+<p>Bitshift variations in C minor uses the following C operators,
+which appear here ordered form highest precedence (tightest
+binding) to least:</p>
+
+<table>
+<tr><th><tt>[]</tt></th><td>indexing</td></tr>
+<tr><th><tt>* / %</tt></th><td>multiplicative</td></tr>
+<tr><th><tt>+ -</tt></th><td>additive</td></tr>
+<tr><th><tt>&lt;&lt; &gt;&gt;</tt></th><td>bitshift</td></tr>
+<tr><th><tt>&amp;</tt></th><td>bitwise AND</td></tr>
+<tr><th><tt>^</tt></th><td>bitwise XOR</td></tr>
+<tr><th><tt>|</tt></th><td>bitwise OR</td></tr>
+<tr><th><tt>=</tt></th><td>assignment</td></tr>
+</table>
+
+<p>From this table we deduce that:</p>
+
+<code>
+n^i&gt;&gt;13 &equiv; n^(i&gt;&gt;13) &equiv; n ^ (i/8192)<br>
+3&amp;i&gt;&gt;16 &equiv; 3&amp;(i&gt;&gt;16) &equiv; 11<sub>b</sub> &amp; (i/65536)
+</code>
+
+   </article>
+  </div>
+ </div>
+
+ <footer class="footer w3-container w3-black w3-padding-small w3-center">
+  <div class="w3-row">
+   <div class="w3-col m6">
+    <p>2021-03-17<br><a href="http://www.sylphe.ch/">www.sylphe.ch</a></p>
+   </div>
+   <div class="w3-col m6">
+    <p>hosted by<br>Xilab</p>
+   </div>
+  </div>
+ </footer>
+
+<!-- Default Statcounter code for Sylphe.ch http://sylphe.ch -->
+<script type="text/javascript">
+var sc_project=11742718;
+var sc_invisible=1;
+var sc_security="e3faf291";
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="site stats"
+href="http://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="//c.statcounter.com/11742718/0/e3faf291/1/" alt="site
+stats"></a></div></noscript>
+<!-- End of Statcounter Code -->
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+ <title>Qbist Textures</title>
+ <meta name="description" content="Render Qbist textures on HTML5 canvas">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="../css/normalize.css">
+ <link rel="stylesheet" href="../css/w3.css">
+ <link rel="stylesheet" href="app.css">
+</head>
+<body class="w3-padding">
+
+ <header class="w3-container w3-bar">
+  <h1 class="w3-bar-item w3-mobile">Qbist Textures</h1>
+  <span class="w3-bar-item w3-mobile w3-right">
+   <a href="#about">About</a> | <a href="/">Sylphe</a>
+  </span>
+ </header>
+
+ <section class="w3-section w3-cell-row">
+  <div class="w3-container w3-cell w3-cell-middle w3-mobile w3-center"
+       style="width:80px;overflow:hidden" id="history" title="History">
+   <!--History-->
+   <canvas width="60" height="60" title="History-1"></canvas>
+   <canvas width="60" height="60" title="History-2"></canvas>
+   <canvas width="60" height="60" title="History-3"></canvas>
+   <canvas width="60" height="60" title="History-4"></canvas>
+   <canvas width="60" height="60" title="History-5"></canvas>
+   <canvas width="60" height="60" title="History-6"></canvas>
+   <canvas width="60" height="60" title="History-7"></canvas>
+  </div>
+  <div class="w3-container w3-cell w3-cell-middle w3-mobile w3-center dark">
+   <!--Main canvas-->
+   <canvas id="qbist" width="448" height="448"></canvas>
+   <br/>
+   <input id="name" type="text" placeholder="Name this Qbist" class="w3-block"/>
+  </div>
+  <div class="w3-container w3-cell w3-cell-top w3-mobile">
+   <!--Controls/buttons-->
+    <h4>Variations</h4>
+    <div class="w3-cell-row w3-block">
+      <button id="btnFine" title="Fine Variation"
+              class="w3-cell w3-third w3-button w3-round">Fine</button>
+      <button id="btnMedium" title="Medium Variation"
+              class="w3-cell w3-third w3-button w3-round">Medium</button>
+      <button id="btnCoarse" title="Coarse Variation"
+              class="w3-cell w3-third w3-button w3-round">Coarse</button>
+    </div>
+    <button id="btnRandom" title="Random Qbist"
+            class="w3-button w3-round w3-block w3-section">Randomize</button>
+    <h4>Options</h4>
+    <input id="antialias" type="checkbox" class="w3-check"/>
+    <label title="Compute at higher resolution and average (slower)"
+           for="antialias">Anti-Alias</label>
+    <div class="w3-bar w3-section">
+     <button id="btnSave" title="Save current Qbist to local storage"
+             class="w3-button w3-round">Save</button>
+     <button id="btnDelete" title="Delete current Qbist from local storage"
+             class="w3-button w3-round">Delete</button>
+     <button id="btnOpenExport" title="Open Export dialog"
+             class="w3-button w3-round">Export</button>
+     <button id="btnOpenImport" title="Open Import dialog"
+             class="w3-button w3-round">Import</button>
+    </div>
+  </div>
+ </section>
+
+ <section id="savedQbists" class="w3-panel">
+  <h3>Saved Qbists</h3>
+  <p id="saved">
+   <button class="w3-button w3-round">
+    <canvas width=20 height=20></canvas>
+    Template
+   </button>
+  </p>
+ </section>
+
+ <section id="presetQbists" class="w3-panel">
+  <h3>Preset Qbists</h3>
+  <p id="presets">
+   <button class="w3-button w3-round">Template</button>
+  </p>
+  <p>Some presets have been recovered from save files of my old
+  Macintosh implementation of the Qbist algorithm. Some presets
+  were added while writing and testing this web app.</p>
+ </section>
+
+ <div id="modalExport" class="w3-modal">
+  <div class="w3-modal-content w3-card-4 light">
+   <header class="w3-container">
+    <span id="btnCloseExport"
+          class="w3-button w3-display-topright">&times;</span>
+    <h3>Qbist Export</h3>
+   </header>
+   <section class="w3-container">
+    <p>Export
+    <input type="text" maxlength="6" size="6" class="w3-center"
+     placeholder="width" id="exportWidth"> by
+    <input type="text" maxlength="6" size="6" class="w3-center"
+     placeholder="height" id="exportHeight"> pixels
+    to <button id="btnExportPNG" class="w3-button w3-round">PNG</button>
+    or <button id="btnExportJPEG" class="w3-button w3-round">JPEG</button>
+    </p>
+    <p class="w3-panel w3-leftbar">Renders the current Qbist
+    to an image file for download. Uses an off-screen canvas and the <a
+     href="https://html.spec.whatwg.org/#dom-canvas-todataurl"
+     target="blank">toDataURL</a> method, which may or may not
+    work for your browser.</p>
+    <hr>
+    <p>Export Qbist parameters for use in the
+    <button id="btnExportGIMP" class="w3-button w3-round">GIMP</button></p>
+    <p class="w3-panel w3-leftbar">The generated file can be
+    loaded into the GIMP's Qbist plugin.</p>
+    <hr>
+    <p>Copy parameters for
+    <button id="btnCopyQbist" class="w3-button w3-round">Current Qbist</button>
+    or
+    <button id="btnCopyQbists" class="w3-button w3-round">Saved Qbists</button>
+    to the clipboard.</p>
+    <input id="exportText" type="text" readonly="readonly" title="Foo Bar">
+    <p class="w3-panel w3-leftbar">You may paste the copied parameters
+    to any document, such as an email to your friends, or a backup to
+    yourself. The parameters can be imported again by pasting them into
+    the Import dialog.</p>
+   </section>
+  </div>
+ </div>
+
+ <div id="modalImport" class="w3-modal">
+  <div class="w3-modal-content w3-card-4 light">
+   <header class="w3-container">
+    <span id="btnCloseImport"
+          class="w3-button w3-display-topright">&times;</span>
+    <h3>Qbist Import</h3>
+   </header>
+   <section class="w3-container">
+    <p>In the text field, paste the parameters for one
+    or several Qbists.</p>
+    <input id="importText" type="text">
+    <p id="importMessage" class="w3-panel w3-red">Validation message</p>
+    <p><button class="w3-button w3-round" id="btnImportAdd">Add</button>
+    to saved Qbists or
+    <button class="w3-button w3-round" id="btnImportReplace">Replace</button>
+    saved Qbists.</p>
+    <p class="w3-panel w3-leftbar">The pasted text must conform to
+    what is produced by the Export functionality. This may be the
+    parameter object for a single Qbist or an array of such objects.
+    Be <strong>careful</strong> with Replace: previously saved Qbists
+    will be gone! Hint: to delete <strong>all</strong> saved Qbists,
+    replace with <code>[]</code>, the empty array.</p>
+   </section>
+  </div>
+ </div>
+
+ <footer id="about" class="w3-panel">
+  <h3>About Qbist</h3>
+  <p>The Qbist algorithm generates random textures with (sometimes)
+  a cubist appearance. The algorithm was devised by J&ouml;rn Loviscach
+  in the article <cite>Ausgew&uuml;rfelt. Moderne Kunst algorithmisch
+  erzeugen</cite>, <a href="http://www.heise.de/ct/">c't</a> 1995,
+  volume 10, pages 326-329.
+  In about 2001 I played with the algorithm on a Macintosh computer
+  and had some fun. Now that we have HTML5 and the Canvas element, it
+  was too tempting to rebuild it for the Web.</p>
+  <p><strong>Usage:</strong>
+  This web app starts with a random Qbist texture.
+  Use the buttons provided to create variations of the current
+  texture or a completely random one.
+  The small images next to the large one show your recent history.
+  Click on any of them to bring it back.
+  If you like a texture, you can name it and save it to your
+  browser's local storage.
+  The rendered texture can be exported either by right-clicking
+  on the canvas and saving the image, or with the <cite>Export PNG</cite>
+  button. The latter will render to an 800x800 off-screen canvas
+  (takes some time!) and export via the <cite>toDataURL</cite>
+  method, which may fail with such large a canvas!</p>
+  <p>Apparently, the <a href="https://www.gimp.org/">GIMP</a> image editor
+  implements the Qbist algorithm as one of its filter plugins.
+  The <cite>Export GIMP</cite> button will generate a file that
+  can be loaded into the plugin. The rendered images may differ,
+  though; it appears there is some clipping in my implementation
+  but not in the Gimp, but I did not investigate.</p>
+  <p><strong>Algorithm:</strong>
+  The principle is to set color[x,y] = f(x,y)
+  where f is a really complicated function randomly composed from
+  simple parts. See the source in <a href="qbist.js">qbist.js</a>
+  for details.</p>
+ </footer>
+
+ <script src="../js/vendor/jquery-3.2.1.min.js"></script>
+ <script type="application/javascript" src="qbist.js"></script>
+ <script type="application/javascript" src="presets.js"></script>
+ <script type="application/javascript" src="base64.js"></script>
+ <script type="application/javascript" src="app.js"></script>
+
+<!-- Default Statcounter code for Sylphe.ch http://sylphe.ch -->
+<script type="text/javascript">
+var sc_project=11742718; 
+var sc_invisible=1; 
+var sc_security="e3faf291"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="site stats"
+href="http://statcounter.com/" target="_blank"><img
+class="statcounter"
+src="//c.statcounter.com/11742718/0/e3faf291/1/" alt="site
+stats"></a></div></noscript>
+<!-- End of Statcounter Code -->
+
+</body>
+</html>

@@ -1,0 +1,538 @@
+% Griechisch mit Plain TeX
+% ujr/2020-04-21
+
+\magnification\magstep1
+
+% fixpdfmag: pdftex applies magnification even to page dimensions - undo!
+\ifx\pdfpageheight\undefined\else
+  \message{Fixing pdftex magnification annoyance.}
+  \begingroup \catcode`\@=11
+  \global\pdfpageheight\expandafter\getf@ctor\the\pdfpageheight truept
+  \global\pdfpagewidth\expandafter\getf@ctor\the\pdfpagewidth truept
+  \global\pdfhorigin\expandafter\getf@ctor\the\pdfhorigin truept
+  \global\pdfvorigin\expandafter\getf@ctor\the\pdfvorigin truept
+  \endgroup
+\fi
+
+\input german.sty
+
+\ifx\pdfoutput\undefined\csname newcount\endcsname\pdfoutput\fi
+\ifcase\pdfoutput\def\pdfinfo#1{\special{pdf:docinfo<<#1>>}}\fi
+
+\pdfinfo{ /Author (Urs-Jakob Ruetschi)
+  /Title (Griechisch mit Plain TeX)
+  /Subject (Greek alphabet, diacritics, and TeX) }
+
+\hsize=15.0truecm \advance\hoffset 4.6 truemm % (21-15)/2 - 2.54
+\vsize=23.0truecm \advance\voffset 8.1 truemm % (29.7-23)/2 - 2.54
+
+\parskip=0pt plus 2pt
+\parindent=18pt
+\baselineskip=13pt plus .4pt minus .2pt
+\hfuzz=1pt % lines may stick a little into the right margin
+
+\font\tf=cmbx17 % title
+\font\sf=cmbx12 % section headings
+\font\sc=cmr9 % small caps relative to cmr10
+\font\eightrm=cmr8
+\font\sevenrm=cmr7
+\font\ninett=cmtt9 % for listings
+
+\def\section #1\par{\vskip 0pt plus .1\vsize\penalty-250
+  \vskip 0pt plus -.1\vsize \vskip 24pt plus 6pt minus 4pt
+  \vskip\parskip \centerline{\sf #1}%
+  \nobreak\medskip\noindent\ignorespaces}%
+
+\def\signed #1\par{{\unskip\nobreak\hfil\penalty50
+  \hskip2em\hbox{}\nobreak\hfil\sl#1\relax
+  \parfillskip=0pt \finalhyphendemerits=0 \par}}
+
+\def\gr{\greekmode}% Usage: {\gr ...}
+\def\vChr{\unskip\hskip.67ex v.\kern.5ex Chr.}%
+\def\nChr{\unskip\hskip.67ex n.\kern.5ex Chr.}%
+\def\zB{z.\kern.3ex B.}% zum Beispiel
+\def\dh{d.\kern.3ex h.}% das heisst
+\def\LaTeX{L\kern-.7ex\raise.4ex\hbox{\sevenrm A}\kern-.3ex\TeX}%
+\def\*{\smallskip\hangindent\parindent\hangafter1\noindent\ignorespaces}%
+\def\\{\hfil\break}% newline
+\def\nex#1{\kern-.#1ex}% negative kern by 0.#1 ex
+\def\bull{\vrule width .5ex height .8ex depth -.3ex}% bullet
+
+%=== Verbatim listing ==========================================
+\def\verbatim{\begingroup
+ \def\do##1{\catcode`##1=12 }\dospecials
+ \parskip 0pt \parindent 0pt \baselineskip10pt \ninett
+ \catcode`\ =13 \catcode`\^^M=13 % active
+ \catcode`\?=0}
+{\catcode`\^^M=13{\catcode`\ =13
+  \gdef\verbatimdefs{\def^^M{\ \par}\let =\ }}%
+  \gdef\verbatimgobble#1^^M{}}%
+\def\beginverbatim{\smallskip\begingroup\verbatim}
+\def\endverbatim{\endgroup\endgroup\smallskip}
+
+% \obeyspaces \obeylines \tt}
+%{\obeyspaces\gdef {\ }} % \obeyspaces now gives \ , not \space
+
+%\catcode`\?=\active % our replacement escape
+%\newskip\ttglue \ttglue=.5em plus.25em minus.15em
+%{\obeylines\gdef?{\ttverbatim\spaceskip=\ttglue%
+% \let^^M=\ \let?=\endgroup}}
+%===============================================================
+
+%=== Greek names not already defined in plain TeX ==============
+% Mathcode: xyzz where x=class, y=family, zz=fontpos (all hex)
+% Class:    0=ordinary, ..., 7=extensible
+% Family:   0=roman, 1=math italic, 2=math symbol, 3=math extension
+\mathchardef\omicron="016F  % o
+% in the following, use family 1 (eg, "0141) for slanted
+\mathchardef\Alpha="0041    % A
+\mathchardef\Beta="0042     % B
+\mathchardef\Epsilon="0045  % E
+\mathchardef\Zeta="005A     % Z
+\mathchardef\Eta="0048      % H
+\mathchardef\Iota="0049     % I
+\mathchardef\Kappa="004B    % K
+\mathchardef\Mu="004D       % M
+\mathchardef\Nu="004E       % N
+\mathchardef\Omicron="004F  % O
+\mathchardef\Rho="0050      % P
+\mathchardef\Tau="0054      % T
+\mathchardef\Chi="0058      % X
+%===============================================================
+
+%=== from Levy's greekmacros, reformatted  =====================
+\font\tengreek=grreg10 \font\tengrbf=grbld10 % load fonts
+%
+\def\greekmode{% change category codes for diacritics
+ \catcode`\<=13 \lccode`\<=`\<% make active (defined below)
+ \catcode`\>=13 \lccode`\>=`\>%
+ \catcode`\'=11 \lccode`\'=`\'% make letter (ligatures in font)
+ \catcode`\`=11 \lccode`\`=`\`%
+ \catcode`\~=11 \lccode`\~=`\~%
+ \catcode`\"=11 \lccode`\"=`\"%
+ \catcode`\|=11 \lccode`\|=`\|%
+ \tengreek\def\bf{\tengrbf}}
+% Save old meanings of breathing marks:
+\def\lt{<}
+\def\gt{>}
+% Helper macros (to see what follows a breathing mark):
+\def\ifnextchar#1#2#3{\let\tempe #1\def\tempa{#2}\def\tempb{#3}\futurelet
+  \tempc\ifnch}% if next char is #1 then expand to #2 else #3
+\def\ifnch{\ifx\tempc\tempe\let\tempd\tempa\else\let\tempd\tempb\fi\tempd}
+\def\gobble#1{}% just remove the next token
+% Vowel (next char) and accent:
+\newcount\vwl
+\newcount\acct
+{
+  \greekmode
+  \gdef>{\ifnextchar `{\expandafter\smoothgrave\gobble}{\char\lq\>}}
+  \gdef<{\ifnextchar `{\expandafter\roughgrave\gobble}{\char\lq\<}}
+  \gdef\smoothgrave#1{\acct=\rq137 \vwl=\lq#1 \dobreathinggrave}
+  \gdef\roughgrave#1{\acct=\rq103 \vwl=\lq#1 \dobreathinggrave}
+  \gdef\dobreathinggrave{\ifnum\vwl\lt\rq140    %if uppercase
+    \char\the\acct\char\the\vwl\else\expandafter\testiota\fi}
+  \gdef\testiota{\ifnextchar |{\addiota\doaccent\gobble}{\doaccent}}
+  \gdef\addiota{\ifnum\vwl=\lq a\vwl=\rq370
+    \else\ifnum\vwl=\lq h\vwl=\rq371 \else\vwl=\rq372 \fi\fi}
+  \gdef\doaccent{\accent\the\acct \char\the\vwl\relax}
+}
+%===============================================================
+
+
+\topglue 2pc plus 1filll
+
+\centerline{\tf Griechisch mit Plain \TeX}
+\nobreak\bigskip\noindent
+{\sl Vorbemerkung:} weder kann ich griechisch, noch bin ich philologisch
+gebildet; die Ausf"uhrungen hier sind sicher unvollst"andig und
+m"oglicherweise auch falsch. Sie halfen mir aber immer wieder, ein
+griechisches Wort mit Plain \TeX\ "uberhaupt schreiben zu k"onnen.
+F"ur mehr als einige Worte sind die Methoden hier nicht geeignet,
+und f"ur \LaTeX\ sind andere Quellen zu konsultieren.
+\signed ---ujr
+
+
+\section Alphabet
+
+Die Griechen haben um 800\vChr\ das ph"onizische Alphabet "ubernommen
+und verbessert; insbesondere wurden Zeichen f"ur die Vokale erg"anzt.
+Es umfasst 24 Buchstaben. Die Minuskeln (Kleinbuchstaben) wurden erst
+ab 500\nChr\ entwickelt. Eine Besonderheit ist das kleine Sigma, welches
+innerhalb des Wortes als $\sigma$, am Ende des Wortes aber als $\varsigma$
+geschrieben wird, \zB\ {\gr fil'osofos}. % philosophos
+
+$$\vbox{\offinterlineskip
+\tabskip 1em plus 1em
+\def\loosen{\omit&\omit& height 2pt&
+  \omit&\omit& height 2pt& \omit&\omit& height2pt&\omit\cr}
+\halign{\strut\hfil\eightrm#& #\hfil& \vrule#&
+  \hfil$#$\hfil& \hfil$#$\hfil& \vrule#&
+  \hfil{\gr#}\hfil& \hfil{\gr#}\hfil& \vrule#&
+  \hfil#\hfil\cr
+\omit Buchstabe\hfil\span&& \omit Knuth\span&& \omit Levy\span&& Aussprache\cr
+\loosen
+\noalign{\hrule}
+\loosen
+ 1& Alpha&&   \Alpha&   \alpha&&   A& a&& a\cr
+ 2& Beta&&    \Beta&    \beta&&    B& b&& b\cr
+ 3& Gamma&&   \Gamma&   \gamma&&   G& g&& g\cr
+ 4& Delta&&   \Delta&   \delta&&   D& d&& d\cr
+ 5& Epsilon&& \Epsilon& \varepsilon,\epsilon&& E& e&& e {\eightrm(kurz)}\cr
+ 6& Zeta&&    \Zeta&    \zeta&&    Z& z&& z\cr
+ 7& Eta&&     \Eta&     \eta&&     H& h&& e, "a\cr
+ 8& Theta&&   \Theta&   \theta,\vartheta&&   J& j&& th\cr
+ 9& Iota&&    \Iota&    \iota&&    I& i&& i, j\cr
+10& Kappa&&   \Kappa&   \kappa&&   K& k&& k\cr
+11& Lambda&&  \Lambda&  \lambda&&  L& l&& l\cr
+12& My&&      \Mu&      \mu&&      M& m&& m\cr
+13& Ny&&      \Nu&      \nu&&      N& n&& n\cr
+14& Xi&&      \Xi&      \xi&&      X& x&& x\cr
+15& Omikron&& \Omicron& \omicron&& O& o&& o {\eightrm(kurz)}\cr
+16& Pi&&      \Pi&      \pi&&      P& p&& p\cr
+17& Rho&&     \Rho&     \rho,\varrho&&     R& r&& r, rh\cr
+18& Sigma&&   \Sigma&   \sigma,\varsigma&& S& \char99, s&& s\cr
+19& Tau&&     \Tau&     \tau&&     T& t&& t\cr
+20& Ypsilon&& \Upsilon& \upsilon&& U& u&& "u, y\cr
+21& Phi&&     \Phi&     \phi,\varphi&&     F& f&& f, ph\cr
+22& Chi&&     \Chi&     \chi&&     Q& q&& ch\cr
+23& Psi&&     \Psi&     \psi&&     Y& y&& ps\cr
+24& Omega&&   \Omega&   \omega&&   W& w&& o {\eightrm(lang)}\cr
+}}$$
+
+\eject
+
+\noindent
+Die angegebene Aussprache bezieht sich auf das Altgriechische;
+das Neugriechische weicht zum Teil stark davon ab.
+In der Spalte ``Knuth'' sind die Buchstaben aus den Computer Modern
+({\sc CM}) Fonts von D.\kern.5ex E.\kern.5ex Knuth dargestellt,
+in der Spalte ``Levy'' jene von Silvio Levy, welche von den
+{\sc CM} Fonts abgeleitet wurden. Die Grossbuchstaben sind sich
+"ahnlich; Knuths Minuskeln sind kursiv, Levys aufrecht, aber
+mit einer geneigten Achse im Unterschied zur vertikalen Achse
+der lateinischen Buchstaben in {\sc CM} Roman.
+Levys Font ist ein Pixelfont, {\sc CM} liegt heute allgemein
+als Vektorfont vor.
+
+
+\section Diphthonge
+
+Diphthonge sind Doppellaute aus zwei verschiedenen Vokalen innerhalb
+einer Silbe, \zB\ h\underbar{eu}te.
+Sie sind zu unterscheiden vom Hiatus, welcher das Aufeinandertreffen
+zweier Vokale verschiedener Silben bezeichnet,
+\zB\ R\underbar{u$\cdot$i}ne.
+Das Altgriechische kennt folgende Diphthonge:
+
+$$\vbox{\offinterlineskip
+\def\loosen{\omit&\omit& height 2pt&\omit\cr}%
+\tabskip 1em
+\halign{\tabskip 1em
+ \strut\hfil$#$\hfil& \hfil$#$\hfil& \vrule#& \hfil#\hfil\cr
+ \span\omit\hfil Diphthong\hfil&&\omit\hfil Aussprache\hfil\cr
+ \loosen
+ \noalign{\hrule}
+ \loosen
+ \Alpha\Upsilon&   \alpha\upsilon&      & au\cr
+ \Omicron\Upsilon& \omicron\upsilon&    & u\cr
+ \Omicron\Iota&    \omicron\iota&       & oi\cr
+ \Epsilon\Iota&    \varepsilon\iota&    & e$\cdot$i\rlap{\enspace(!)}\cr
+ \Alpha\Iota&      \alpha\iota&         & ai\cr
+ \Epsilon\Upsilon& \varepsilon\upsilon& & oi, eu\cr
+}}$$
+
+
+\section Diakritische Zeichen
+
+Mit Diakritika wird die altgriechische Aussprache angezeigt.
+Es gibt drei Akzente f"ur die Tonlage, zwei Zeichen f"ur Hauchlaute,
+das Iota subscriptum, das Trema und weitere.
+
+\medskip
+\item{--}
+Akut ({\gr >oxe~ia}, engl.~{\it acute\/}):
+helle Tonlage, Steigton
+\item{--}
+Gravis ({\gr bare~ia}, {\it grave\/}):
+dumpfe Tonlage, Fallton
+\item{--}
+Zirkumflex ({\gr perispwm'enh}, {\it circumflex}):
+Zusammenzug aus Akut und Gravis
+\medskip
+\item{--}
+Spiritus asper ({\gr dase~ia}, {\it rough breathing\/}):
+rauher = h"orbarer Hauch, \zB\ {\gr <istor'ia} % historia
+\item{--}
+Spiritus lenis ({\gr yil'otes, yil'h}, {\it smooth breathing\/}):
+sanfter = stummer Hauch, zeigt an, dass {\it kein\/} Hauch vorliegt,
+\zB\ {\gr >'\nex2Erws, >ast'hr} % Eros, aster
+\medskip
+\item{--}
+Iota subscriptum: ein kleines Iota unter {\gr a, h, w},
+also {\gr a|, h|, w|}, \zB\ {\gr tragw|d'ia} % tragodia
+\item{--}
+Iota adscriptum: bei Majuskeln wird es rechts angeh"angt,
+\zB\ {\gr <'\nex6 Aidhs, >\nex4 Oide~ion} % Hades, Oideion
+\medskip
+\item{--}
+Trema ({\gr tr~hma}, {\gr dialutik'a}, engl.~{\it diaeresis\/}):
+zeigt an, dass zwei Vokale {\it keinen\/} Diphthong bilden, dass
+also ein Hiatus vorliegt, \zB\ {\gr >\nex7 Atre"'idhs} (vier Silben)
+
+\medskip\noindent
+Die Diakritika stehen {\it "uber\/} Minuskeln, aber {\it vor\/} Majuskeln,
+\zB\ {\gr <\nex3Ell'as}. % Hellas
+
+Akut und Gravis k"onnen auf allen Vokalen stehen,
+Zirkumflex auf allen langen Vokalen (also nicht auf $\varepsilon$
+und $\omicron$, die immer kurz sind).
+Die Hauchzeichen k"onnen auf Vokalen und $\rho$ stehen.
+Ein $\upsilon$ am Wortanfang tr"agt immer ein Spiritus asper.
+Ein Akzent kann mit einem Hauchzeichen oder dem Trema auf
+einem Buchstaben koexistieren, \zB\ {\gr >'onoma}. % onoma
+
+Griechische W"orter sind auf einer der drei letzten Silben betont.
+Der Akut kann eine Betonung auf jeder dieser Silben anzeigen.
+Wenn die Betonung auf der letzten Silbe liegt und ohne Satzzeichen
+ein weiteres Wort folgt, wird ein Gravis gesetzt.
+Der Zirkumflex kann nur auf den beiden letzten Silben gesetzt werden.
+Alle diese Varianten haben Namen, z.B. Ox\'ytonon f"ur einen Akut
+(oder eine Gravis) auf der letzten Silbe; sie sind hier nicht
+weiter aufgef"uhrt.
+
+Griechenland hat 1982 die vereinfachte ``monotonische''
+Orthographie eingef"uhrt, welche nur noch ein diakritisches
+Zeichen verwendent, den {\gr t'onos}, um die betonte Silbe
+anzuzeigen; er wird wie der Akut geschrieben.
+
+\bigbreak\noindent
+{\sl Anmerkungen:\/} das Trema ist vom Umlaut zu unterscheiden,
+obschon beide gleich dargestellt werden.
+\bull\ Die Herkunft des Spiritus lenis ist ungewiss.
+\bull\ In Unicode sind die Kombinationen aus Buchstaben und Diakritika
+als eigene Zeichen codiert, \zB\ steht {\tt U+1F02} f"ur {\gr >`a}.
+Die klassische \TeX-Engine kann mit Unicode Fonts nicht
+umgehen, weil sie maximal 256 Glyphen pro Font erlaubt.
+Neuere Unicode-f"ahige \TeX-Erweiterungen sind Xe\TeX\ und Lua\TeX,
+diese sind hier aber nicht behandelt.
+
+
+\section Computer Modern Fonts
+
+Plain \TeX\ ({\tt plain.tex}) baut auf den Computer Modern ({\sc CM})
+Fonts auf. Diese enthalten auch Glyphen f"ur die griechischen Buchstaben,
+soweit sie sich von den lateinischen unterscheiden. Somit stehen auf
+allen \TeX-Systemen griechische Buchstaben zur Verf"ugung, allerdings
+nur im Mathematik-Modus. Beispiele:
+$$
+\vbox{\settabs\+\hskip3cm&\cr
+\let\s=\string
+\+$a\sin\beta=b\sin\alpha$&
+ {\tt\$a\string\sin\string\beta=b\string\sin\string\alpha\$}\cr
+\+$\bar\xi={1\over n}\sum \xi_i$&
+ {\tt\$} ...{\tt\s\sum\s\xi\_i\$}\qquad({\tt\s\sum} produces a large sigma)\cr
+\+$\chi\alpha\acute\iota\rho\epsilon\theta\epsilon$&
+ \tt\$\s\chi\s\alpha\s\acute\s\iota\s\rho\s\epsilon\s\theta\s\epsilon\$\cr
+\+$\rm XAIPE\Theta E$&
+ \tt\$\s\rm\ XAIPE\s\Theta\ E\$\cr
+\+$\it XAIRE\Theta E$&
+ \tt\$\s\it\ XAIRE\s\Theta\ E\$\qquad\eightrm(seid gegr"usst)\cr
+}
+$$
+Die Minuskeln stehen nur kursiv zur Verf"ugung, die Majuskeln
+aber aufrecht und kursiv. Plain \TeX\ definiert Steuerbefehle
+nur f"ur jene griechischen Buchstaben, welche sich von den
+lateinischen unterscheiden; die ``fehlenden'' liessen sich,
+falls gew"unscht, einfach erstellen.
+Akzente ({\tt\string\acute}, {\tt\string\grave}, {\tt\string\hat})
+und Trema ({\tt\string\ddot}) auf Kleinbuchstaben sind unmittelbar
+m"oglich, danach wird es schwieriger.
+
+Was f"ur den mathematischen Formelsatz intuitiv und effizient
+ist, wird f"ur ganze griechische W"orter oder gar Texte bald
+m"uhsam. Es w"are m"oglich, sich auf Basis der Glyphen in den
+{\sc CM} Fonts geeignete Macros zu bauen, aber auch damit w"aren
+keine nicht-kursiven Minuskeln m"oglich. Es braucht griechische
+Fonts.
+
+
+\section Levy's Greek Fonts
+
+Ende der 1980er hat Silvio Levy von {\sc CM} griechische Fonts
+abgeleitet ({\tt grreg}, {\tt grbld}, {\tt grtt}) und passende
+Makros ({\tt greekmacros.tex}) erstellt, welche
+"uber das Paket {\tt levy-font} auf {\sc CTAN} zur Verf"ugung
+stehen und wohl in den meisten \TeX-Distributionen ohnehin
+enthalten sind.
+
+Die Verwendung erfolgt nach {\tt\string\input~greekmacros}
+durch {\tt\char"7B\string\greekmode~abg\char"7D}
+oder {\tt\string\begingreek\ Greek text\string\endgreek},
+wobei der griechische Text mit lateinischen Buchstaben
+gem"ass folgender Tabelle einzugeben ist:
+$$\hbox{%
+ \valign{\hbox to 11pt{\hfil\strut{\gr#}\hfil}&
+         \hbox to 11pt{\hfil\strut\tt#\hfil}\cr
+ a&a\cr b&b\cr g&g\cr d&d\cr e&e\cr z&z\cr h&h\cr j&j\cr
+ i&i\cr k&k\cr l&l\cr m&m\cr n&n\cr x&x\cr o&o\cr p&p\cr
+ r&r\cr c&s\cr t&t\cr u&u\cr f&f\cr q&q\cr y&y\cr w&w\cr}}
+$$
+$$\hbox{%
+ \valign{\hbox to 11pt{\hfil\strut{\gr#}\hfil}&
+         \hbox to 11pt{\hfil\strut\tt#\hfil}\cr
+ A&A\cr B&B\cr G&G\cr D&D\cr E&E\cr Z&Z\cr H&H\cr J&J\cr
+ I&I\cr K&K\cr L&L\cr M&M\cr N&N\cr X&X\cr O&O\cr P&P\cr
+ R&R\cr S&S\cr T&T\cr U&U\cr F&F\cr Q&Q\cr Y&Y\cr W&W\cr}}
+$$
+Ein {\tt s} ergibt je nach Position im Wort ein $\sigma$
+oder ein $\varsigma$, ein {\tt c} immer ein $\sigma$.
+%
+Akzente werden mit vorangestelltem {\tt\char"27} (Akut),
+{\tt\char"60} (Gravis), {\tt\char"7E} (Zirkumflex) erstellt,
+Hauchzeichen mit vorangestelltem {\tt\char"3C} (rauh),
+{\tt\char"3E} (stumm), das Trema mit vorangestelltem~{\tt\char"22},
+und das Iota subscriptum mit nachgestelltem~{\tt\char"7C}.
+Beispiele:
+$$\vbox{\originalTeX\catcode`\~=11
+ \halign{\strut#\hfil&\qquad{\tt#}\hfil\cr
+  {\gr\spaceskip.5em 'a `a ~a <a >a <'a >`a >~a| "'i}
+  & 'a `a ~a <a >a <'a >`a >~a| "'i\cr
+  {\gr >en >arq~h| >~hn <o l'ogos}
+  & >en >arq~h| >~hn <o l'ogos\cr
+}}
+$$
+Die Akzente sind "uber Ligaturen in den Fonts realisiert,
+die Hauchzeichen je nach Kontext auch mit {\tt\string\accent}.
+Das Kerning zwischen Akzenten und Grossbuchstaben ist
+nicht optimal; in diesem Text wurde oft mittels expliziten
+Unterschneidungen (\zB\ {\tt\string\kern-.3ex}) nachgeholfen.
+Das Trema scheint nur auf {\gr i} und {\gr u} zu gehen.
+
+Levys Fonts enthalten die folgenden Satzzeichen, wobei
+{\bf;} unserem {\bf?} entspricht, und
+der Apostroph und die Anf"uhrungszeichen "uber Ligaturen
+zu erreichen sind:
+$$\hbox{\offinterlineskip%
+ \valign{\hbox to 18pt{\hfil\strut{\gr#}\hfil}%
+         \hbox to 18pt{\vrule width0pt height0pt depth 2pt % line indicates
+                       \leaders\hrule height .1pt\hfill}&  % pos of punct.
+         \hbox to 18pt{\hfil\tt#\strut\hfil}\cr
+ .&.\cr ,&,\cr ;&;\cr :&:\cr !&!\cr ?&?\cr ''&''\cr ((&((\cr ))&))\cr
+}}$$
+
+Es stehen die Fonts {\tt grreg} (regular) und {\tt grbld} (bold)
+je in den Punktgr"ossen 10, 9, 8 zur Verf"ugung.
+"Uber die Makros {\tt\string\tengr} und {\tt\string\tengrbf}
+sind die 10-Punkt-Schriften erreichbar.
+{\bf Achtung:} {\tt greekmacros.tex} l"adt auch den Font {\tt grtt10},
+welcher in meiner Erfahrung aber in \TeX-Distributionen
+nicht zur Verf"ugung steht. Entweder ab Levys Quellen bilden und
+installieren, oder {\tt greekmacros.tex} entsprechend bearbeiten,
+am besten eine Kopie im eigenen {\tt\char"7E/texmf/tex} Verzeichnis.
+
+
+\section Beispiele
+
+\settabs\+\hskip1em&\hskip10pc&\cr
+\+&{\gr\llap{((}E<'ureka, e<'ureka!))}&
+ Heureka, ich habe es gefunden! (Archimedes)\cr
+\+&{\gr >apoj'ewsis}&
+ Apotheose, Verherrlichung, ``Vergottung''\cr
+\+&{\gr <or'izwn k'uklos}&
+  umrandender Kreis, Horizont\cr
+\+&{\gr Sf'igx, sugkop'h}&
+ Sphinx, Synkope ({\gr g} vor {\gr g k x q} als {\it n} gesprochen)\cr
+\+&{\gr Gewgrafik`h <\nex4 Uf'hghsis}&
+  Geographische Kartenlehre (des Ptolem"aus)\cr
+\+&{\gr YUQHS IA\nex3TR\nex1EION}&
+  ``Seelenapotheke'' (Bibliotheksinschrift)\cr
+\+&{\gr\llap{>\nex3}En >arq~h| >~hn <o l'ogos}&
+  Im Anfang war das Wort (Joh 1:1)\cr
+
+
+\section Makro-Notizen
+
+Levys {\tt\string\greekmode} Makro macht {\tt\char"27}
+{\tt\char"60} {\tt\char"7E} {\tt\char"22} {\tt\char"7C}
+gew"ohnliche Buchstaben ({\tt\string\catcode}~11), denn
+diese Akzente sind in den Fonts als Ligaturen hinterlegt;
+{\tt\char"3C} und {\tt\char"3E} werden aktiv gemacht
+({\tt\string\catcode}~13) und pr"ufen, ob ein {\tt\char"60}
+folgt; diese Kombination pr"uft weiter, ob ein Gross- oder
+Kleinbuchstabe folgt, und allenfalls ein Iota-Subskript,
+und expandiert entweder als gew"ohnliche Buchstaben oder
+ein {\tt\string\accent}-Konstrukt. Grund f"ur diese
+Komplikation ist, dass die maximal 256 Slots in einem
+Font nicht reichen f"ur alle Kombination, weswegen
+die seltene Hauchzeichen-Gravis-Kleinbuchstabe-Kombination
+mittels {\tt\string\accent} zusammengesetzt wird.
+Schliesslich wird mit {\tt\string\tengr} zum Font {\tt grreg10}
+gewechselt.
+
+Makros und Fonts sind also aufs engste verkn"upft.
+Das ist ganz anders mit {\tt german.sty}, wo einzig
+{\tt\char"22} aktiv gemacht wird und die deutschen
+Umlaute aus den Glyphen in {\sc CM} zusammengesetzt
+werden.
+
+\TeX\ weist seine Category Codes nur beim ersten Lesen zu,
+also schon beim Scannen von Makro-Argumenten, nicht erst bei
+der Makro-Expansion. Das kann bei den {\tt greekmacros}
+zu unerwarteten Effekten f"uhren, weil die {\tt\string\catcode}s
+ja erst im {\tt\string\greekmode} angepasst werden;
+bei {\tt german.sty} ist das kein Problem, weil hier der
+{\tt\string\catcode} von {\tt\char"22} einmalig beim Laden
+der Makros ge"andert wird (Anwendungen von {\tt\string\originalTeX}
+vorbehalten).
+
+%\medbreak\noindent
+Wie schon erw"ahnt hat Plain \TeX\ keine Steuerbefehle f"ur
+griechische Buchstaben, die formgleich mit lateinischen sind.
+Die ``fehlenden'' Steuerbefehle sind:
+\beginverbatim
+\mathchardef\Alpha="0041   \mathchardef\Iota="0049  \mathchardef\Rho="0050
+\mathchardef\Beta="0042    \mathchardef\Kappa="004B \mathchardef\Tau="0054
+\mathchardef\Epsilon="0045 \mathchardef\Mu="004D    \mathchardef\Chi="0058
+\mathchardef\Zeta="005A  \mathchardef\Nu="004E  \mathchardef\omicron="016F
+\mathchardef\Eta="0048   \mathchardef\Omicron="004F
+?endverbatim
+\noindent
+W"urde man bei den Grossbuchstaben die zweite {\tt 0} durch eine {\tt 1}
+ersetzen (\dh\ Font\-familie~1, also \zB\ {\tt\char"22 0141}),
+erhielte man kursive Buchstaben. Dabei w"aren nat"urlich auch die
+schon in {\tt plain.tex} enthaltenen Definitionen zu "uberschreiben.
+
+
+\section Referenzen
+
+\raggedright
+
+\*
+Silvio Levy, Using Greek Fonts with \TeX, {\sl TUGboat} {\bf 9}:1, 1988,\\
+{\tt http://tug.org/TUGboat/tb09-1/tb20levy.pdf}
+
+\*
+{\tt levy-font}: das Paket auf {\sc CTAN} mit Levys Fonts und Makros:\\
+{\tt https://ctan.org/pkg/levy-font}
+
+\*
+D.\kern.5ex E.\kern.5ex Knuth, {\sl The \TeX book}, Addison-Wesley,
+1984, 1986, 1996;\\
+darin insbesondere Anhang~F mit den {\sc CM} Font-Tabellen.
+
+\*
+Wikipedia: Polytonische Orthographie (Zugriff am 23.~April~2020)\\
+{\tt https://de.wikipedia.org/wiki/Polytonische\_Orthographie}
+
+\*
+Unicode: Character Code Charts online at\\
+{\tt https://www.unicode.org/charts/PDF/U0370.pdf} (Greek and Coptic)\\
+{\tt https://www.unicode.org/charts/PDF/U1F00.pdf} (Greek Extended)
+
+\*
+Claudio Beccari, The teubner \LaTeX\ package: Typesetting
+classical Greek philology, {\sl TUGboat} {\bf 23}:3/4, 2002,\\
+{\tt https://www.tug.org/TUGboat/tb23-3-4/tb75beccteub.pdf}
+
+\bye
+

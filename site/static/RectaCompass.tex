@@ -1,0 +1,281 @@
+% A4 paper: 210 x 297 mm
+% Margins: 10mm on each side, 10mm between panels
+% Therefore, each panel is 90 x 133.5 mm
+% Contains specials for dvipdfm to include raster figures.
+% Uses the epsf macro package to include the eps diagram.
+
+\ifx\pdfoutput\undefined\csname newcount\endcsname\pdfoutput\fi
+\ifcase\pdfoutput\def\pdfinfo#1{\special{pdf:docinfo<<#1>>}}\fi
+\pdfinfo{ /Author (Recta (Rekonstruktion UJR 2013))
+ /Title (Fl^^fcssigkeits-Kompass RECTA)
+ /Subject (Gebrauchsanweisung Recta-Kompass) }
+
+\hsize=190truemm
+\vsize=277truemm
+\voffset=-15.4truemm  % It seems dvi drivers use 1in
+\hoffset=-15.4truemm  % we want 1cm, so subtract 15.4 from 1in
+\newdimen\panelwd \panelwd=90truemm
+\newdimen\panelht \panelht=133.0truemm
+\newdimen\paneldblht \paneldblht=277.0 truemm
+\nopagenumbers
+
+\input epsf
+\input german.sty
+\input letterspacing
+\parindent=1pc
+\parskip=0pt plus 4pt
+\hfuzz=.5ex % not fuzzy about right margins
+\font\bigfont=cmr12 % headings
+\font\tinyfont=cmr10 at 6pt
+\font\smallfont=cmr8
+\def\\{\hskip1ex plus 1ex minus .5ex\relax}
+\def\extrawordstretch{%
+ % Allow more word stretch than usual for CMR10
+ % (2.22222pt) to help TeX with the short line width:
+ \spaceskip=3.33333pt plus 3.33333pt minus 1.11111pt}
+\def\beginpanel#1{\vbox to #1\bgroup
+ \hsize=\panelwd\extrawordstretch}
+\def\endpanel{\par\egroup}
+\def\small{\smallfont\normalbaselineskip=9pt\normalbaselines}
+
+\setbox1=\beginpanel\panelht
+\topglue0pt\vfill
+\vskip 125.5 truemm
+\special{pdf:image width 88mm height 125.5mm (Titel.jpg)}
+\vfill
+\endpanel
+
+\setbox8=\beginpanel\panelht
+\topglue 0pt plus 1fill
+\hrule
+\bigskip
+\centerline{\bigfont VORTEILE}
+\smallskip
+\centerline{\bigfont DES FL\"USSIGKEITS-KOMPASSES}
+\smallskip
+\centerline{\bigfont RECTA}
+\bigskip
+\parindent2em
+\item{{\bf 1.}} Sehr schnelles Arbeiten im Felde durch
+ Ausschaltung der Nadelschwingungen.
+\medskip
+\item{{\bf 2.}} Leichtes Bestimmen der genauen Richtung dank
+ langer Ziellinie und der im Spiegel ersichtlichen Magnetnadel\-stellung.
+\medskip
+\item{{\bf 3.}} Grosse Leuchtkerben erleichtern die Verwendung im Dunkeln.
+\medskip
+\item{{\bf 4.}} Sinnreicher Bau, beim "Offnen geht der Spiegel
+ auto\-matisch in die richtige Lage, ebenso gen"ugt eine
+ Bewegung f"ur das Schliessen und das Zur"uckgehen des Spiegels.
+\medskip
+\item{{\bf 5.}} Geh"ause ganz aus Metall, solid, dauerhaft,
+ praktisches Format.
+\medskip
+\item{{\bf 6.}} Kompasskapsel unzerbrechlich,
+ durchsichtig und ver\-gr"ossernd.
+\bigskip
+\hrule
+\vfill
+{\tinyfont\baselineskip8pt\noindent
+Digital restauriert und neu gesetzt anhand einer Gebrauchsanweisung
+aus den 1950er Jahren, kurz bevor diese vollst"andig zerfiel.
+\hfil---ujr, Juli 2013\parfillskip=0pt\par}
+}
+
+\setbox2=\beginpanel\panelht \parindent=0pt
+% Gently increase letter spacing for this all-caps title:
+\centerline{\bigfont\letterspace spread 1pc{GEBRAUCHSANWEISUNG}}
+\medskip
+\vskip 65truemm
+\special{pdf:image width 88mm height 65mm (Fig1.jpg)}
+\smallskip
+\centerline{\bigfont Allgemeine Bemerkungen}
+\medskip
+1. {\bf Zum "Offnen} nehme man den Kompass in die linke Hand,
+dr"ucke mit dem Daumen auf den Knopf~A und ziehe mit der rechten
+Hand die Schnur~D. Der Spiegel~C stellt sich von selbst in die
+richtige Lage. Durch Neigen des Kompasses l"asst sich der Spiegel
+ins Geh"ause versenken und wieder hervorbringen.
+\smallskip
+2. {\bf Zum Schliessen} dr"ucke man mit Daumen und Zeige\-finger
+auf die Kn"opfe~BB' und stosse den Kompass in das Geh"ause.
+Ist der Spiegel vorher versenkt worden, so schliesse man
+trotz des Widerstandes.
+\smallskip
+%3. {\bf F"ur das Anvisieren im Felde} ist der Spiegel zu verwen\-den.
+3. {\bf F"ur das Anvisieren im Felde} den Spiegel verwenden.
+Die N-Spitze (radiumisiert) der Nadel~E muss sich immer
+\parfillskip=0pt % force last line to full length
+\endpanel
+
+\setbox3=\beginpanel\panelht \parindent=0pt
+zwischen den Leuchtstrichen~L befinden. Der Kompass soll
+horizontal gehalten werden, damit die Nadel frei schwimmt.
+Der gesuchte Punkt wird sich immer in der durch
+die Ziellinie G--G' gegebenen vertikalen Ebene befinden.
+Durch Verwendung des Kompasses wie ein Senklot, indem
+man ihn frei an der Schnur h"angen l"asst, lassen sich ober- und
+unterhalb des Horizonts befindliche Punkte mit Genau\-igkeit bestimmen.
+\smallskip
+4. {\bf Beim Arbeiten auf der Karte} m"ussen die N-S Striche
+des Zifferblattes parallel zu den N-S Strichen der Karte liegen.
+Die Vorderseite~M des Kompasses muss immer dem Standort zugekehrt sein.
+\smallskip
+5. {\bf Einteilung des Zifferblattes:}\hfil\break
+a) \ in  $360^\circ$\kern-.5ex, d.h.~72 Teilungen von $5^\circ$\hfil\break
+b) \ in 6400 Artilleriepromille, d.h.~64 Teilungen.\hfil\break
+\phantom{b) \ }(100 Artilleriepromille = $5^\circ$ $37'$ $30''$)
+\smallskip
+6. {\bf Deklination:} Der magnetische Pol stimmt nicht mit dem
+geographischen Pol "uberein. Der Winkelabstand zwi\-schen den beiden
+Polen ist die Deklination. Sie ver"andert sich mit der Zeit und im
+Raum, von einem Jahr zum andern und von einem Lande zum andern.
+Der Recta-Kompass gestattet die Einstellung auf diese Ver"anderung.
+\smallskip
+7. {\bf Bemerkungen.} {\small
+\spaceskip 2.83337pt plus 2.83337pt minus 0.94446pt
+Der Kompass soll nicht in der N"ahe
+von eisernen Gegenst"anden (Helm, Pistole, Pickel) gebraucht werden;
+von eisernen Gel"andern mindestens 25\kern.5ex m Abstand nehmen. $\diamond$
+In der Fl"ussig\-keit k"onnen kleine Blasen entstehen, die ohne
+Einfluss auf die Funktion des Instrumentes sind. Sie erscheinen
+und verschwinden, hervorgerufen durch Ver"anderungen im Luftdruck
+und in der Tem\-pe\-ra\-tur (H"ohen\-wechsel). $\diamond$
+Die Leuchtkraft des Radiums kann durch Aussetzen in volles Licht
+erh"oht werden.\par}
+\smallskip
+8. {\bf Achtung vor Reibungselektrizit"at!}\hfil\break
+{\small Die Kapsel vor oder beim Gebrauch nicht trocken abreiben.\par}
+\endpanel
+
+\setbox45=\beginpanel\paneldblht
+\centerline{\bigfont Arbeiten im Gel"ande}
+\bigskip
+\item{A.} {\bf Orientieren der Karte.}
+\smallskip
+\item{a)} Versenken des Spiegels~C.
+\item{b)} Den Kompass so auf die Karte legen, dass die N-S Striche
+ des Zifferblattes mit den N-S Strichen der Karte parallel liegen.
+\item{c)} Karte und Kompass drehen bis N-Spitze der Nadel zwischen
+ Leuchtstrichen~L liegt.
+\smallskip
+\centerline{\it oder}
+\smallskip
+\item{a')} Das N des Zifferblattes zum Index H des Kompasses
+ bringen vermittels drehen des Reifens~F.
+\item{b')} Den Kompass parallel zu den N-S Strichen der Karte legen.
+\item{c')} Karte und Kompass drehen bis N-Spitze der Nadel zwischen
+ den Leuchtstrichen~L liegt.
+\bigbreak
+\item{B.} {\bf Bestimmen der Marschrichtung.}
+\smallskip
+\item{a)} Versenken des Spiegels.
+\item{b)} Auf der Karte die Marschrichtung (Richtungsachse)
+ bestimmen durch Verbinden des Standortes~A mit dem Bestimmungsort
+ B, C oder~D entweder unter Zuhilfenahme der L"angsseite des Kompasses
+ (siehe A--B) oder eines mit Bleistift eingezeichneten Striches
+ (siehe A--C) oder der Schnur (siehe A--D).
+\item{c)} Den Kompass parallel zur Richtungsachse auf die Karte legen,
+ Vorderseite~M dem Standort zugekehrt.
+\item{d)} Den Reifen~F drehen bis die N-S Striche des Zifferblattes
+ parallel mit den N-S Strichen der Karte liegen.
+\item{e)} Den Kompass mit ausgezogenem Spiegel in Augenh"ohe bringen.
+ Sich so weit drehen, bei gleichzeitiger Beobach\-tung der Nadel im Spiegel,
+ bis die N-Spitze der Nadel zwischen den Leuchtstrichen~L liegt. Nun wird
+ die Marschrichtung, eventuell ein erster Punkt, "uber die Ziellinie~G
+ visiert.
+\smallskip
+\vskip 60truemm
+\special{pdf:image width 88mm height 60mm (Fig2.jpg)}
+\bigskip
+\item{C.} {\bf Bestimmen eines im Gel"ande sichtbaren Punktes.}
+\smallskip
+\item{a)} Auf der Karte den (eigenen) Standort ermitteln.
+\item{b)} Mit dem Kompass den zu bestimmenden Punkt anvisie\-ren,
+ den Reifen~F drehen bis die N-Spitze der Nadel im Spiegel zwischen
+ den Leuchtstrichen~L liegt.
+\item{c)} Spiegel einschieben.
+\item{d)} Kompass auf die Karte legen, L"angsseite an den
+ Stand\-ort, Kompass um den Standort drehen bis die N-S Striche des
+ Zifferblattes parallel zu den N-S Strichen der Karte liegen.
+\item{e)} Der zu bestimmende Punkt liegt nun in der durch die
+ L"angsseite des Kompasses gegebenen Linie.
+\endpanel
+
+\setbox67=\beginpanel\paneldblht
+\item{D.} {\bf Bestimmen eines unbekannten Standortes.}
+\smallskip
+\item{a)} Auf der Karte zwei vom Standorte aus sichtbare,
+ be\-kann\-te Punkte ermitteln.
+\item{b)} Einen dieser Punkte anvisieren und durch Drehen
+ des Reifens~F die N-Spitze der Nadel zwischen die Leucht\-striche bringen.
+\item{c)} Spiegel einschieben.
+\item{d)} Kompass auf die Karte legen, L"angsseite an den
+ anvisier\-ten Punkt, Kompass um den Punkt drehen, ohne Drehen des
+ Reifens~F, bis die N-S Striche des Zifferblattes parallel zu den
+ N-S Strichen der Karte liegen.
+\item{e)} Eine Linie vom anvisierten Punkt ausgehend parallel
+ zur L"angsseite des Kompasses einzeichnen.
+%\item{f)} Den zweiten Punkt anvisieren und gleich verfahren
+% wie f"ur b--c.
+\item{f)} Mit dem zweiten Punkt gleich verfahren wie f"ur b--e.
+\item{g)} Der Schnittpunkt der zwei Linien gibt den gesuchten
+ Standort an (je n"aher der Winkel zwischen den zwei Linien bei
+ $90^\circ$ liegt, desto genauer l"asst sich der Standort ermitteln).
+\bigbreak
+\item{E.} {\bf Umgehung eines Hindernisses.}
+\item{} (Grundsatz des gleichseitigen Dreiecks.)
+\smallskip
+\centerline{\epsfbox{Fig3.eps}}
+\item{a)} Zur Umgehung eines Hindernisses Richtung N-Spitze der
+ Nadel zwischen Umgehungspunkten K oder~K' nehmen, Schritte z"ahlen.
+\item{b)} Sobald das Gel"ande es gestattet, in der urspr"unglichen
+ Richtung N-Spitze der Nadel zwischen Leuchtstrichen weitergehen.
+\item{c)} Nach "Uberschreiten des Hindernisses Richtung N-Spitze
+ der Nadel zwischen den anderen Umgehungspunkten nehmen, die gleiche
+ Anzahl Schritte wie unter a) mar\-schie\-ren.
+\item{d)} Wieder urspr"ungliche Richtung N-Spitze der Nadel
+ zwischen Leuchtstrichen einschlagen.
+\bigbreak
+\item{F.} {\bf Bestimmen des Azimuts.}\hfil\break
+ Das Azimut ist der am Standort eingeschriebene Winkel
+ zwischen den Linien zum geographischen Norden und zum anvisierten Punkt.
+\smallskip
+\item{a)} {\bf Auf der Karte} kann es mit dem Winkelmass,
+ aber auch mit dem Kompass ermittelt werden, indem wie unter B (a--d)
+ verfahren wird. Das Azimut ist dann beim Index~H ablesbar.
+\smallskip
+\item{b)} {\bf Im Gel"ande} ist das Azimut ablesbar beim Index~H,
+ wenn das Ziel anvisiert ist und die N-Spitze der Nadel zwischen den
+ Leuchtstrichen liegt. Mit Hilfe des Azimuts ist es leicht, von der
+ Linie N--S oder O--W ausgehend, eine topographische Skizze anzufertigen.
+\bigbreak
+\item{G.} {\bf Regulieren auf die Deklination}\hfil\break
+(soll nur vom Spezialisten ausgef"uhrt werden).\par{\small
+\item{a)} Die Befestigungsschraube des Zifferblattes sorgf"altig
+ um ungef"ahr eine halbe Drehung l"osen.
+\item{b)} Das Zifferblatt auf die Deklination einstellen.
+\item{c)} Schraube wieder sorgf"altig anziehen.\par}
+% Need \par within the \small group or bad line spacing results
+\endpanel
+
+% Vorderseite: four panels
+\topglue0pt\vfill
+\line{\box1\hfil\box8}
+\vskip 3truemm plus 1fill
+\hrule
+\vskip 3truemm plus 1fill
+\line{\box2\hfil\box3}
+\vfill\eject
+
+% R"uckseite: two long columns
+\topglue0pt\vfill
+\line{\box45\hfil\box67}
+\vfill\eject
+
+% Show the tenrm word skip (can override with \spaceskip):
+%\showthe\fontdimen2\tenrm % normal interword spacing
+%\showthe\fontdimen3\tenrm % interword stretch (\spaceskip plus)
+%\showthe\fontdimen4\tenrm % interword shrink (\spaceskip minus)
+
+\bye

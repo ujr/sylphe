@@ -1,0 +1,49 @@
+/*CSS for the Qbist web app*/
+body.waiting, body.waiting * {cursor:wait;}
+
+/*Color Scheme: bkgd #112, dark #ccd/223, light #001/445*/
+body{color:#ccd;background-color:#112}
+header,footer{color:#ccd;background-color:#223}/*dark*/
+section{color:#001;background-color:#445}/*light*/
+button{color:#ccd!important;background-color:#223!important}/*dark*/
+.dark{color:#ccd!important;background-color:#223!important}
+.light{color:#000!important;background-color:#445!important}
+hr{border:1px solid #223}
+
+input[type=text]{background-color:#112;color:#ccd;border:1px solid #445}
+input#name{text-align:center}
+input#exportText{width:100%;color:#556}
+input#importText{width:100%;color:#556}
+
+/*Take control over the checkbox (boolie.org/css-checkbox-styling)*/
+input[type="checkbox"]{
+ display:none;
+ vertical-align:middle;
+}
+input[type="checkbox"]+label::before{
+ width:20px;
+ height:20px;
+ border-radius:4px;
+ border:3px solid #223;
+ background-color:#445;
+ display:block;
+ content:"";
+ float:left;
+ margin-right:6px;
+}
+input[type="checkbox"]:checked+label::before{
+ box-shadow:inset 0px 0px 0px 3px #445;
+ background-color:#223;
+}
+
+/*Button-like history canvases*/
+#history canvas{cursor:pointer}
+#history canvas:hover{opacity:0.5}
+
+/*Pixel fiddling*/
+#qbist{margin-top:4px}
+#name{margin-bottom:4px}
+#saved button{margin:2px}
+#presets button{margin:2px}
+header,section,footer{min-width:488px}/*sync with main canvas*/
+

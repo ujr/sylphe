@@ -1,0 +1,38 @@
+
+Qbist tasks and ideas
+=====================
+
+  x  Layout and style using CSS (try w3.css)
+  x  Anti aliasing (checkbox) by oversampling
+  x  Optimize qbist (see my old method and verify)
+  x  Modify (or clear) name on variate/random
+  x  Export to (high resolution) PNG file (toDataUrl/toBlob)
+  x  Export to save file for GIMP's qbist plugin
+  x  Wait cursor while rendering (via setTimeout)
+  x  History and undo
+  x  Color scheme (just grays) for w3.css
+  x  Style the antialias checkbox
+  x  Delete and rename saved qbists
+  x  Export and import qbist parameters
+  x  Let user choose size for exported PNG/JPEG
+  x  Coding style: decide on and adhere to some guidelines
+  x  Review all presets, keep only the "better" half
+  o  Tune for responsiveness / improve for small screens
+
+
+Web Dev Knowledge
+
+  Include scripts in head or body? Why?
+   - HTML parsing stops while scripts are loaded!
+   - load scripts towards the end of the HTML
+   - or use the HTML5 async or defer attributes
+
+  Redraw DOM during long running JS function?
+   - avoid long-running JS functions!
+   - most browsers redraw only after JS returned
+   - work around using setTimeout() or setInterval()
+
+  Gotchas:
+   - history is unavailable as a global variable name: because it is
+     the read-only window.history property that represents Browser history
+

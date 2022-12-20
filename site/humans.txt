@@ -1,0 +1,20 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+
+# TEAM
+
+Anonymous sylphs
+
+
+# THANKS
+
+Some other spirits
+
+
+# TECHNOLOGY COLOPHON
+
+- Standards: HTML5, CSS3
+- Components: H5BP, Normalize.css, Modernizr, W3.css
+- Software: Vim, Gimp, TeX, LilyPond, make, Fossil, Git
+

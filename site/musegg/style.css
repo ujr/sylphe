@@ -1,0 +1,31 @@
+body {
+ background-color: black; color: #ffffdd;
+ margin-left: 2pc; margin-right:2pc;
+ margin-top:1pc; margin-bottom:1pc;
+ font-family:Verdana,sans-serif;
+}
+
+/*h1, h2, h3 { font-family: sans-serif }*/
+h3 { font-style: italic }
+
+b.sans { font-family: sans-serif; font-weight: bold; font-size:90% }
+p.inset { padding-left: 1pc }
+
+pre { margin-left: 1pc }
+
+a:link { color: #aaaaff; text-decoration:none }
+a:visited { color: #aaaaff; text-decoration:none }
+a:hover { color: #8888dd; text-decoration:underline }
+a:active { color: #ffaaaa; text-decoration:underline }
+
+.image { max-width:100%; height:auto }
+hr { display:block; height:1px; border:0; border-top:1px solid #dda }
+/* Italic block quotes with hanging "smart" quotes: */
+blockquote { font-style:italic; text-indent:-.33em }
+blockquote:before { content:"“" }
+blockquote:after { content:"”" }
+
+br.wideonly{display:none}
+@media (min-width:56em) {
+  br.wideonly{display:inline}
+}

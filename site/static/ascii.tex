@@ -1,0 +1,107 @@
+%&Plain
+% ujr/2000-10-06 started
+% ujr/2002-09-07 last change
+% ujr/2022-11-01 add C escapes
+
+\magnification=\magstep1
+\nopagenumbers
+\parindent=0pt
+
+\def\horiz{\noalign{\hrule}}
+\def\Vrule{\vrule width1pt}
+\def\Strut{\lower1.2ex\null\raise2.5ex\null}
+
+\font\titlefont=cmbx12 scaled \magstep1
+\font\smallfont=cmti8
+
+\centerline{\titlefont The ASCII Scheme of Character Encoding}
+\bigskip%\medskip
+ASCII is short for {\sl American Standard Code for Information
+Interchange\/}, a standard mapping characters to 7 bit codes, that
+is, to numbers ranging from 0 to 127~decimal, or {\it7F\/}~hexadecimal,
+according to the following table. Code {\it20\/}~hex represents
+the space.
+
+\bigskip
+
+\hfuzz.5pt\halign to\hsize{\tabskip3pt plus10pt
+\hskip3pt\Strut\hfil\it#\hfil\quad\Vrule&&\hbox to.27in{\hfil\tt#\hfil}\cr
+hex&\it0&\it1&\it2&\it3&\it4&\it5&\it6&\it7&\it8&\it9&\it A&\it B&\it C&\it D&\it E&\it F\cr
+\noalign{\hrule height.5pt depth.5pt}
+0x&NUL&SOH&STX&ETX&EOT&ENQ&ACK&BEL&BS&HT&LF&VT&FF&CR&SO&SI\cr
+\noalign{\hrule}
+1x&DLE&DC1&DC2&DC3&DC4&NAK&SYN&ETB&CAN&EM&SUB&ESC&FS&GS&RS&US\cr
+\noalign{\hrule}
+2x&\tt\char"20&!&"&\char"23&\char"24&\char"25&\char"26&'&(&)&*&+&,&-&.&/\cr
+\noalign{\hrule}
+3x&0&1&2&3&4&5&6&7&8&9&:&;&<&=&>&?\cr
+\noalign{\hrule}
+4x&@&A&B&C&D&E&F&G&H&I&J&K&L&M&N&O\cr
+\noalign{\hrule}
+5x&P&Q&R&S&T&U&V&W&X&Y&Z&[&\char"5C&]&\char"5E&\char"5F\cr
+\noalign{\hrule}
+6x&`&a&b&c&d&e&f&g&h&i&j&k&l&m&n&o\cr
+\noalign{\hrule}
+7x&p&q&r&s&t&u&v&w&x&y&z&\char"7B&\char"7C&\char"7D&\char"7E&DEL\cr
+\noalign{\hrule}}
+
+\bigskip\bigskip
+
+The first 32 codes are assigned to functions rather than characters.
+For example, {\tt HT} means ``move to next tab stop.'' Many of these
+{\sl control codes\/} are for specific applications and rarely used
+nowadays. Anyway, here is what they mean and their C escape sequences:
+
+\bigskip
+
+\hbox{
+%  F I R S T   C O L U M N
+\vtop{\hsize=0.50\hsize \halign{\tabskip12pt plus10pt%
+\hfil\it#&\tt#\hfil&#\hfil\cr
+\noalign{\bf Transmission Control}
+01&SOH&Start of Heading\cr
+02&STX&Start of Text\cr
+03&ETX&End of Text\cr
+04&EOT&End of Transmission\cr
+05&ENQ&Enquiry (goes with {\tt ACK})\cr
+06&ACK&Acknowledge\cr
+10&DLE&Data Link Escape\cr
+15&NAK&Negative Acknowledge\cr
+16&SYN&Synchronous Idle\cr
+17&ETB&End Transmission Block\cr
+\noalign{\medskip\bf Device Control}
+11&DC1&XON (okay to send)\cr
+12&DC2&Device Control 2\cr
+13&DC3&XOFF (pause listings)\cr
+14&DC4&Device Control 4\cr
+\noalign{\medskip\bf Code Extensions}
+0E&SO&Shift Out (use alternate code)\cr
+0F&SI&Shift In (resume default code)\cr
+1B&ESC&Escape\cr}} \quad
+%  S E C O N D   C O L U M N
+\vtop{\hsize=0.46\hsize \halign{\tabskip12pt plus10pt%
+\hfil\it#&\tt#\hfil&#\hfil&\tt#\hfil\cr
+\noalign{\bf Formatting}
+08&BS&Backspace&\string\b\cr
+09&HT&Horizontal Tabulation&\string\t\cr
+0A&LF&Line Feed&\string\n\cr
+0B&VT&Vertical Tabulation&\string\v\cr
+0C&FF&Form Feed (page eject)&\string\f\cr
+0D&CR&Carriage Return&\string\r\cr
+\noalign{\medskip\bf Information Separation}
+1C&FS&File Separator\cr
+1D&GS&Group Separator\cr
+1E&RS&Record Separator\cr
+1F&US&Unit Separator\cr
+\noalign{\medskip\bf Others}
+00&NUL&Null character&\string\0\cr
+07&BEL&Bell (audible alert)&\string\a\cr
+18&CAN&Cancel line\cr
+19&EM&End of Medium\cr
+1A&SUB&Substitute\cr}}
+}
+
+\nobreak\vskip0pt plus1filll
+\rightline{\smallfont ujr/2000-10-06}
+
+\bye

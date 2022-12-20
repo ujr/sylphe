@@ -1,0 +1,7 @@
+{
+  "no-multiple-blanks": false,
+  "line-length": { "tables": false },
+  "no-inline-html": {
+    "allowed_elements": [ "a", "sub", "sup", "table" ]
+  }
+}

@@ -1,0 +1,24 @@
+
+.footer a{
+ text-decoration:none;
+}
+
+.footer p{
+  color:#ddffdd;
+}
+
+/* Extras for the ASCII chart */
+#ascii table td{font-family:monospace;}
+#ascii table th{font-style:italic;font-weight:normal;}
+
+/* Compensate for the sticky top nav bar */
+
+body{
+ margin-top:56px;
+}
+
+@media only screen and (max-width:600px){
+ body{
+  margin-top:90px;
+ }
+}
